@@ -12,9 +12,9 @@ using System.IO;
 
 namespace DMDemo
 {
-    public partial class MainFrom : Form
+    public partial class HwndGetTitleFrom : Form
     {
-        public MainFrom()
+        public HwndGetTitleFrom()
         {
             InitializeComponent();
         }
@@ -155,7 +155,7 @@ namespace DMDemo
 
         private void MainFrom_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Environment.Exit(0);
+            
         }
 
         private void linkRegsActiveX_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
