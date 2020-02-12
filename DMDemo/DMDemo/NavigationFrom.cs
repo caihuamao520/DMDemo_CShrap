@@ -31,7 +31,10 @@ namespace DMDemo
 
         private void btnOpenTesseractOcrDemo_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            OCRImage ocrI = new OCRImage();
+            ocrI.ShowDialog();
+            Environment.Exit(0);
         }
     }
 }

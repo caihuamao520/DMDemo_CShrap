@@ -67,6 +67,10 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SDK\Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -82,6 +86,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditImageSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditImageSet.Designer.cs">
+      <DependentUpon>EditImageSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetHwndInfor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,14 +104,24 @@
     <Compile Include="HwndGetTitleFrom.Designer.cs">
       <DependentUpon>HwndGetTitleFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageCodeHandle.cs" />
     <Compile Include="NavigationFrom.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NavigationFrom.Designer.cs">
       <DependentUpon>NavigationFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="OCRImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OCRImage.Designer.cs">
+      <DependentUpon>OCRImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EditImageSet.resx">
+      <DependentUpon>EditImageSet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GetHwndInfor.resx">
       <DependentUpon>GetHwndInfor.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NavigationFrom.resx">
       <DependentUpon>NavigationFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OCRImage.resx">
+      <DependentUpon>OCRImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -136,17 +159,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="Dm">
-      <Guid>{84288AAD-BA02-4EF2-85EC-3FAD4D11354D}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ooopic_1488262876.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -171,14 +183,24 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Dm">
+      <Guid>{84288AAD-BA02-4EF2-85EC-3FAD4D11354D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>copy "$(ProjectDir)..\..\SDK\dm.dll" "$(TargetDir)" /d /y
-xcopy "$(ProjectDir)..\..\SDK\Tesseract.3.3.0\x86" "$(TargetDir)x86\"/d /s /y
+    <PreBuildEvent>xcopy "$(ProjectDir)..\..\SDK\Tesseract.3.3.0\x86" "$(TargetDir)x86\"/d /s /y
 xcopy "$(ProjectDir)..\..\SDK\Tesseract.3.3.0\x64" "$(TargetDir)x64\"/d /s /y
 xcopy "$(ProjectDir)..\..\SDK\Tesseract.3.3.0\tessdata" "$(TargetDir)tessdata\"/d /s /y</PreBuildEvent>
   </PropertyGroup>
