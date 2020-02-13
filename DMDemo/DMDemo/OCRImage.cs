@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using Tesseract;
 using System.Runtime.ExceptionServices;
+using System.Drawing.Imaging;
 
 namespace DMDemo
 {
@@ -22,7 +23,7 @@ namespace DMDemo
 
         private void OCRImage_Load(object sender, EventArgs e)
         {
-            this.cbEngineMode.Text = "TesseractAndCube";
+            this.cbEngineMode.Text = "Default";
             this.cbImageContenMode.Text = "SingleLine";
             
             _tesseractDataFile = Path.Combine(Application.StartupPath, "tessdata");
@@ -245,13 +246,9 @@ namespace DMDemo
 
         private void linkEditImageSet_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            EditImageSet eis = EditImageSet.GetEditImageSet();
             if (this.pictureBox1.Image == null) return;
 
-            //using (Bitmap tempMap = new Bitmap(this.pictureBox1.Image))
-            //{
-            //    eis.ReplaceBackgroundColor = tempMap.GetPixel(1, 1);
-            //}
+            EditImageSet eis = EditImageSet.GetEditImageSet();
             eis.ShowDialog();
         }
 
@@ -279,5 +276,31 @@ namespace DMDemo
                 MessageBox.Show(ee.Message, "异常");
             }
         }
+
+        private void linkAutoImageSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                if (this.pictureBox1.Image == null) return;
+
+                _ocrImage = new Bitmap(this.pictureBox1.Image);
+
+                _ocrImage = ImageCodeHandle.KiResizeImage(_ocrImage, _ocrImage.Width * 2, _ocrImage.Height * 2);
+
+                this.pictureBox1.Image = _ocrImage;
+                ////图像处理
+                //ImageCodeHandle imgHandle = new ImageCodeHandle(_ocrImage);
+                //int threshold = imgHandle.GetGrayValue(_ocrImage);
+                //_ocrImage = imgHandle.ToGrey();
+                //Bitmap bit = imgHandle.GetPicValidByValue(_ocrImage, threshold);
+                //this.pictureBox1.Image = bit;
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message, "异常");
+            }
+        }
+
+
     }
 }

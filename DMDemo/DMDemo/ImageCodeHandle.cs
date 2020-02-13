@@ -18,6 +18,7 @@ namespace DMDemo
         /// 图片信息
         /// </summary>
         private Bitmap _bmpobj;
+        private int _dgGrayValue;
 
         public ImageCodeHandle(Bitmap pic)
         {
@@ -486,6 +487,65 @@ namespace DMDemo
         }
         public Bitmap Thresholding()
         {
+            //int[] histogram = new int[256];
+            //int minGrayValue = 255, maxGrayValue = 0;
+            ////求取直方图
+            //for (int i = 0; i < _bmpobj.Width; i++)
+            //{
+            //    for (int j = 0; j < _bmpobj.Height; j++)
+            //    {
+            //        Color pixelColor = _bmpobj.GetPixel(i, j);
+            //        histogram[pixelColor.R]++;
+            //        if (pixelColor.R > maxGrayValue) maxGrayValue = pixelColor.R;
+            //        if (pixelColor.R < minGrayValue) minGrayValue = pixelColor.R;
+            //    }
+            //}
+            ////迭代计算阀值
+            //int threshold = -1;
+            //int newThreshold = (minGrayValue + maxGrayValue) / 2;
+            //for (int iterationTimes = 0; threshold != newThreshold && iterationTimes < 100; iterationTimes++)
+            //{
+            //    threshold = newThreshold;
+            //    int lP1 = 0;
+            //    int lP2 = 0;
+            //    int lS1 = 0;
+            //    int lS2 = 0;
+            //    //求两个区域的灰度的平均值
+            //    for (int i = minGrayValue; i < threshold; i++)
+            //    {
+            //        lP1 += histogram[i] * i;
+            //        lS1 += histogram[i];
+            //    }
+            //    if (lS1 == 0) continue;
+            //    int mean1GrayValue = (lP1 / lS1);
+            //    for (int i = threshold + 1; i < maxGrayValue; i++)
+            //    {
+            //        lP2 += histogram[i] * i;
+            //        lS2 += histogram[i];
+            //    }
+            //    if (lS2 == 0) continue;
+            //    int mean2GrayValue = (lP2 / lS2);
+            //    newThreshold = (mean1GrayValue + mean2GrayValue) / 2;
+            //}
+
+            _dgGrayValue = GetGrayValue(_bmpobj);
+
+            //计算二值化
+            for (int i = 0; i < _bmpobj.Width; i++)
+            {
+                for (int j = 0; j < _bmpobj.Height; j++)
+                {
+                    Color pixelColor = _bmpobj.GetPixel(i, j);
+                    if (pixelColor.R > _dgGrayValue) _bmpobj.SetPixel(i, j, Color.FromArgb(255, 255, 255));
+                    else _bmpobj.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+                }
+            }
+
+            return _bmpobj;
+        }
+
+        public int GetGrayValue(Bitmap bit)
+        {
             int[] histogram = new int[256];
             int minGrayValue = 255, maxGrayValue = 0;
             //求取直方图
@@ -526,21 +586,28 @@ namespace DMDemo
                 int mean2GrayValue = (lP2 / lS2);
                 newThreshold = (mean1GrayValue + mean2GrayValue) / 2;
             }
-            //计算二值化
-            for (int i = 0; i < _bmpobj.Width; i++)
-            {
-                for (int j = 0; j < _bmpobj.Height; j++)
-                {
-                    Color pixelColor = _bmpobj.GetPixel(i, j);
-                    if (pixelColor.R > threshold) _bmpobj.SetPixel(i, j, Color.FromArgb(255, 255, 255));
-                    else _bmpobj.SetPixel(i, j, Color.FromArgb(0, 0, 0));
-                }
-            }
 
-            return _bmpobj;
+            return newThreshold;
         }
 
+        public static Bitmap KiResizeImage(Bitmap bmp, int newW, int newH)
+        {
+            try
+            {
+                Bitmap b = new Bitmap(newW, newH);
+                Graphics g = Graphics.FromImage(b);
 
+                g.InterpolationMode = InterpolationMode.HighQualityBilinear;
+                g.DrawImage(bmp, new Rectangle(0, 0, newW, newH), new Rectangle(0, 0, bmp.Width, bmp.Height), GraphicsUnit.Pixel);
+                g.Dispose();
 
+                return b;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
     }
 }

@@ -160,7 +160,8 @@ namespace DMDemo
             this.pbBackGroupColor.Image = bit;
 
             this.ckbHD.Checked = _isGrayByPixels;
-            
+            this.ckbEZH.Checked = _isThresholding;
+
             this.ckbJZ.Checked = _isClearNoise;
             this.txtJDJJ.Text = _grayBackgroundLimit.ToString();
             this.txtJDDX.Text = _noiseMaxNearPoints.ToString();
@@ -210,6 +211,7 @@ namespace DMDemo
             }
             _isBackgroundColorReplace = this.ckbBJSTH.Checked;
             _isGrayByPixels = this.ckbHD.Checked;
+            _isThresholding = this.ckbEZH.Checked;
             _isClearNoise = this.ckbJZ.Checked;
 
             temp = 0;
