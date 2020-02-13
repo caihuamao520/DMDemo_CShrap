@@ -22,5 +22,65 @@ namespace DMDemo.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string mousePoint {
+            get {
+                return ((string)(this["mousePoint"]));
+            }
+            set {
+                this["mousePoint"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string className {
+            get {
+                return ((string)(this["className"]));
+            }
+            set {
+                this["className"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LikeTitle {
+            get {
+                return ((string)(this["LikeTitle"]));
+            }
+            set {
+                this["LikeTitle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TopFormClassName {
+            get {
+                return ((string)(this["TopFormClassName"]));
+            }
+            set {
+                this["TopFormClassName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TopFormTitle {
+            get {
+                return ((string)(this["TopFormTitle"]));
+            }
+            set {
+                this["TopFormTitle"] = value;
+            }
+        }
     }
 }

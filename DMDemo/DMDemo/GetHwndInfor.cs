@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using Dm;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.IO;
 
 namespace DMDemo
 {
@@ -23,8 +25,11 @@ namespace DMDemo
         private static dmsoft mydm = new dmsoft();//大漠插件
         private Rectangle _rc;//句柄控件的位置、大小
         private string _hwndTitle = string.Empty;//句柄内容
+        private string _hwndClassName = string.Empty;//句柄类名
+        private string _HwbdProcessPath = string.Empty;//句柄线程名称
         private Point _mousePoint;
         private int _hwnd;
+        private int _hwndParent;
         /// <summary>
         /// 句柄
         /// </summary>
@@ -33,6 +38,16 @@ namespace DMDemo
             get
             {
                 return _hwnd;
+            }
+        }
+        /// <summary>
+        /// 父窗体句柄
+        /// </summary>
+        public int _HwndParent
+        {
+            get
+            {
+                return _hwndParent;
             }
         }
         /// <summary>
@@ -55,13 +70,48 @@ namespace DMDemo
                 return _hwndTitle;
             }
         }
+        
+        /// <summary>
+        /// 句柄类名
+        /// </summary>
+        public string HwndClassName
+        {
+            get
+            {
+                return _hwndClassName;
+            }
+        }
+        /// <summary>
+        /// 句柄类名
+        /// </summary>
+        public string HwndProcessPath
+        {
+            get
+            {
+                return _HwbdProcessPath;
+            }
+        }
+        /// <summary>
+        /// 获取句柄时鼠标停留的位置
+        /// </summary>
+        public Point MousePoint 
+        {
+            get
+            {
+                return _mousePoint;
+            }
+        }
 
         public GetHwndInfor()
         {
             _rc = new Rectangle();
             _mousePoint = new Point(0);
             _hwnd = 0;
-
+            //判断组件是否注册
+            if (!CheckRegistredOcx(@"CLSID\{26037A0E-7CBD-4FFF-9C63-56F2D0770214}"))
+            {
+                AutoRegCom("regsvr32 -s dm.dll");
+            }
             InitializeComponent();
         }
         
@@ -84,8 +134,12 @@ namespace DMDemo
                 {
                     _mousePoint = MousePosition;
                     _hwnd = mydm.GetPointWindow(_mousePoint.X, _mousePoint.Y);//获取句柄
+                    _hwndParent=mydm.GetWindow(_hwnd, 0);
 
                     _hwndTitle = mydm.GetWindowTitle(_hwnd);
+                    _hwndClassName = mydm.GetWindowClass(_hwnd);
+                    _HwbdProcessPath = mydm.GetWindowProcessPath(_hwnd);
+
                     object x1, y1, x2, y2;
 
                     Rectangle rc = new Rectangle(0, 0, 0, 0);
@@ -135,14 +189,190 @@ namespace DMDemo
                 this.Size = new System.Drawing.Size(rc.Size.Width + 4, rc.Size.Height + 4);
             }));
         }
+
+
         /// <summary>
-        /// 获取指定组件的内容
+        /// 获取指定句柄的内容
         /// </summary>
         /// <param name="hwend"></param>
         /// <returns></returns>
         public static string GetHwndTitle(int hwend)
         {
             return mydm.GetWindowTitle(hwend);
+        }
+        /// <summary>
+        /// 根据鼠标位置获取句柄
+        /// </summary>
+        /// <param name="poi"></param>
+        /// <returns></returns>
+        public static int MousePointGetHwnd(Point poi)
+        {
+            return mydm.GetPointWindow(poi.X, poi.Y);//获取句柄
+        }
+        /// <summary>
+        /// 根据父窗口和类名获取句柄
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public static int ClassNameGetHwnd(int parent, string className,string strTitle)
+        {
+            return mydm.FindWindowEx(parent, className, strTitle);
+        }
+        /// <summary>
+        /// 获取父窗体句柄
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static int GetHwndParentHwnd(int hwnd)
+        {
+            return mydm.GetWindow(hwnd, 0);
+        }
+        /// <summary>
+        /// 获取类名称
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static string GetHwndClassName(int hwnd)
+        {
+            return mydm.GetWindowClass(hwnd);
+        }
+        /// <summary>
+        /// 根据类名与题名查找窗体
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public static List<int> ClassNameAndTitleToParentHwnd(string title, string className)
+        {
+            List<int> FormHwndList = new List<int>();
+            string strFormHwnds = mydm.EnumWindow(0, title, className, 1 + 2 + 16);
+            foreach(string s in strFormHwnds.Split(','))
+            {
+                if (!string.IsNullOrEmpty(s))
+                {
+                    FormHwndList.Add(int.Parse(s));
+                }
+            }
+            return FormHwndList;
+        }
+        /// <summary>
+        /// 获取顶层窗口
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static int GetTopFormHwnd(int hwnd)
+        {
+            return mydm.GetWindow(hwnd, 7);
+        }
+        /// <summary>
+        /// 置顶指定窗体
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static bool TopShowForm(int hwnd)
+        {
+            if (mydm.GetWindowState(hwnd, 0) == 1)//是否存在
+            {
+                mydm.SetWindowState(hwnd, 1);
+                if (mydm.SetWindowState(hwnd, 8) == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 取消置顶指定窗体
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static bool CancelTopShowForm(int hwnd)
+        {
+            if (mydm.GetWindowState(hwnd, 0) == 1)//是否存在
+            {
+                if (mydm.SetWindowState(hwnd, 9) == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 查找顶层窗口
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static int FindTopForm(string className,string title)
+        {
+            return mydm.FindWindow(className, title);
+        }
+
+        /// <summary>
+        /// 注册组件
+        /// </summary>
+        /// <param name="strCmd"></param>
+        /// <returns></returns>
+        public static string AutoRegCom(string strCmd)
+        {
+            string rInfo;
+            try
+            {
+                Process myProcess = new Process();
+                ProcessStartInfo myProcessStartInfo = new ProcessStartInfo("cmd.exe");
+                myProcessStartInfo.UseShellExecute = false;
+                myProcessStartInfo.CreateNoWindow = true;
+                myProcessStartInfo.RedirectStandardOutput = true;
+                myProcess.StartInfo = myProcessStartInfo;
+                myProcessStartInfo.Arguments = "/c " + strCmd;
+                myProcess.Start();
+                StreamReader myStreamReader = myProcess.StandardOutput;
+                rInfo = myStreamReader.ReadToEnd();
+                myProcess.Close();
+                rInfo = strCmd + "\r\n" + rInfo;
+                return rInfo;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        /// <summary>
+        /// 检测ocx是否注册
+        /// </summary>
+        /// <param name="ClassId"></param>
+        /// <returns></returns>
+        public static bool CheckRegistredOcx(string ClassId)
+        {
+            Microsoft.Win32.RegistryKey Regkey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ClassId);
+            if (Regkey != null)
+            {
+                string res = Regkey.OpenSubKey("InprocServer32").GetValue("").ToString();
+                if (!File.Exists(res))
+                {
+                    return false;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

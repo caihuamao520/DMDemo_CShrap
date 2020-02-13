@@ -1,6 +1,6 @@
 ﻿namespace DMDemo
 {
-    partial class MainFrom
+    partial class HwndGetTitleFrom
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrom));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HwndGetTitleFrom));
             this.btnGetActiveLocation = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,6 +36,14 @@
             this.txtHwnd = new System.Windows.Forms.TextBox();
             this.btnRealTimeGetHwndData = new System.Windows.Forms.Button();
             this.linkRegsActiveX = new System.Windows.Forms.LinkLabel();
+            this.txtClassName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnSelectHwnd = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtMousePoint = new System.Windows.Forms.TextBox();
+            this.btnLikeHwnd = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtLikeTitle = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnGetActiveLocation
@@ -105,11 +113,90 @@
             this.linkRegsActiveX.Text = "重新注册组件";
             this.linkRegsActiveX.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRegsActiveX_LinkClicked);
             // 
-            // MainFrom
+            // txtClassName
+            // 
+            this.txtClassName.Location = new System.Drawing.Point(28, 295);
+            this.txtClassName.Multiline = true;
+            this.txtClassName.Name = "txtClassName";
+            this.txtClassName.ReadOnly = true;
+            this.txtClassName.Size = new System.Drawing.Size(223, 21);
+            this.txtClassName.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(26, 280);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "类名：";
+            // 
+            // btnSelectHwnd
+            // 
+            this.btnSelectHwnd.Location = new System.Drawing.Point(267, 239);
+            this.btnSelectHwnd.Name = "btnSelectHwnd";
+            this.btnSelectHwnd.Size = new System.Drawing.Size(131, 33);
+            this.btnSelectHwnd.TabIndex = 9;
+            this.btnSelectHwnd.Text = "坐标查找句柄";
+            this.btnSelectHwnd.UseVisualStyleBackColor = true;
+            this.btnSelectHwnd.Click += new System.EventHandler(this.btnSelectHwnd_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(23, 249);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 12);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "鼠标位置：";
+            // 
+            // txtMousePoint
+            // 
+            this.txtMousePoint.Location = new System.Drawing.Point(94, 246);
+            this.txtMousePoint.Name = "txtMousePoint";
+            this.txtMousePoint.Size = new System.Drawing.Size(157, 21);
+            this.txtMousePoint.TabIndex = 13;
+            // 
+            // btnLikeHwnd
+            // 
+            this.btnLikeHwnd.Location = new System.Drawing.Point(267, 295);
+            this.btnLikeHwnd.Name = "btnLikeHwnd";
+            this.btnLikeHwnd.Size = new System.Drawing.Size(131, 68);
+            this.btnLikeHwnd.TabIndex = 14;
+            this.btnLikeHwnd.Text = "父窗体+内容模糊查找句柄";
+            this.btnLikeHwnd.UseVisualStyleBackColor = true;
+            this.btnLikeHwnd.Click += new System.EventHandler(this.btnLikeHwnd_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(24, 327);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(137, 12);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "文本内容（模糊查找）：";
+            // 
+            // txtLikeTitle
+            // 
+            this.txtLikeTitle.Location = new System.Drawing.Point(26, 342);
+            this.txtLikeTitle.Multiline = true;
+            this.txtLikeTitle.Name = "txtLikeTitle";
+            this.txtLikeTitle.Size = new System.Drawing.Size(225, 21);
+            this.txtLikeTitle.TabIndex = 15;
+            // 
+            // HwndGetTitleFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(410, 249);
+            this.ClientSize = new System.Drawing.Size(410, 391);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtLikeTitle);
+            this.Controls.Add(this.btnLikeHwnd);
+            this.Controls.Add(this.txtMousePoint);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.btnSelectHwnd);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtClassName);
             this.Controls.Add(this.linkRegsActiveX);
             this.Controls.Add(this.btnRealTimeGetHwndData);
             this.Controls.Add(this.txtHwnd);
@@ -120,7 +207,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MainFrom";
+            this.Name = "HwndGetTitleFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "智能识别窗体DEMO";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrom_FormClosing);
@@ -139,6 +226,14 @@
         private System.Windows.Forms.TextBox txtHwnd;
         private System.Windows.Forms.Button btnRealTimeGetHwndData;
         private System.Windows.Forms.LinkLabel linkRegsActiveX;
+        private System.Windows.Forms.TextBox txtClassName;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnSelectHwnd;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtMousePoint;
+        private System.Windows.Forms.Button btnLikeHwnd;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtLikeTitle;
     }
 }
 
