@@ -12,13 +12,15 @@ namespace DMDemo
     public partial class EditImageSet : Form
     {
         private static EditImageSet _eis;
-        private bool _isContrastRatio = true;//开启对比度调整
+        private bool _isContrastRatio = false;//开启对比度调整
         private int _contrastRatioValue = 100;
         private bool _isBackgroundColorReplace = false;//关闭背景色替换
         private Color _replaceBackgroundColor = Color.FromArgb(255, 0, 0, 0);
         private int _backgroundReplaceTolerance = 100;
         private bool _isGrayByPixels = true;//开启灰度处理
         private bool _isThresholding = true;//二值化
+        private bool _autoImageSize = true;//自动图像大小
+        private int _autoImageHeight = 72;
         private bool _isClearNoise = false;//关闭降噪
         private int _grayBackgroundLimit = 128;
         private int _noiseMaxNearPoints = 1;
@@ -71,6 +73,26 @@ namespace DMDemo
             get
             {
                 return _isThresholding;
+            }
+        }
+        /// <summary>
+        /// 开启自动调整图像大小
+        /// </summary>
+        public bool IsAutoImageSize 
+        {
+            get
+            {
+                return _autoImageSize;
+            }
+        }
+        /// <summary>
+        /// 自动调整图像高度阀值
+        /// </summary>
+        public int AutoImageHeight 
+        {
+            get 
+            {
+                return _autoImageHeight;
             }
         }
         /// <summary>
@@ -161,17 +183,18 @@ namespace DMDemo
 
             this.ckbHD.Checked = _isGrayByPixels;
             this.ckbEZH.Checked = _isThresholding;
+            this.ckbTZTXDX.Checked = _autoImageSize;
+            this.txtTXGD.Text = _autoImageHeight.ToString();
 
             this.ckbJZ.Checked = _isClearNoise;
             this.txtJDJJ.Text = _grayBackgroundLimit.ToString();
             this.txtJDDX.Text = _noiseMaxNearPoints.ToString();
 
-
-
             this.pDUB.Enabled = _isContrastRatio;
             this.pBJSTH.Enabled = _isBackgroundColorReplace;
             this.pHD.Enabled = _isGrayByPixels;
             this.pJZ.Enabled = _isClearNoise;
+            this.pEZH.Enabled = _isThresholding;
         }
 
         private void ckbDUB_CheckedChanged(object sender, EventArgs e)
@@ -194,6 +217,16 @@ namespace DMDemo
             this.pJZ.Enabled = this.ckbJZ.Checked;
         }
 
+        private void ckbEZH_CheckedChanged(object sender, EventArgs e)
+        {
+            this.pEZH.Enabled = this.ckbEZH.Checked;
+        }
+
+        private void ckbTZTXDX_CheckedChanged(object sender, EventArgs e)
+        {
+            this.pZDTZDX.Enabled = this.ckbTZTXDX.Checked;
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             _isContrastRatio = this.ckbDUB.Checked;
@@ -212,7 +245,19 @@ namespace DMDemo
             _isBackgroundColorReplace = this.ckbBJSTH.Checked;
             _isGrayByPixels = this.ckbHD.Checked;
             _isThresholding = this.ckbEZH.Checked;
+            _autoImageSize = this.ckbTZTXDX.Checked;
             _isClearNoise = this.ckbJZ.Checked;
+
+            temp = 72;
+            if (int.TryParse(txtTXGD.Text, out temp))
+            {
+                _autoImageHeight = temp;
+            }
+            else
+            {
+                MessageBox.Show("错误的 高度阀值", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             temp = 0;
             if (int.TryParse(txtJDJJ.Text, out temp))
@@ -256,5 +301,7 @@ namespace DMDemo
             }
             this.pbBackGroupColor.Image = bit;
         }
+
+        
     }
 }

@@ -44,7 +44,6 @@
             this.rbAutoImageSize = new System.Windows.Forms.RadioButton();
             this.rbSouceImageSize = new System.Windows.Forms.RadioButton();
             this.linAsSaveImageFile = new System.Windows.Forms.LinkLabel();
-            this.linkAutoImageSize = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -75,7 +74,7 @@
             this.groupBox1.Controls.Add(this.txtOCRContent);
             this.groupBox1.Controls.Add(this.btnOpenImageFile);
             this.groupBox1.Controls.Add(this.btnOCRImage);
-            this.groupBox1.Location = new System.Drawing.Point(500, 12);
+            this.groupBox1.Location = new System.Drawing.Point(612, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(277, 527);
             this.groupBox1.TabIndex = 1;
@@ -216,7 +215,7 @@
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(470, 492);
+            this.pictureBox1.Size = new System.Drawing.Size(582, 492);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -249,9 +248,9 @@
             // 
             // linAsSaveImageFile
             // 
-            this.linAsSaveImageFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linAsSaveImageFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.linAsSaveImageFile.AutoSize = true;
-            this.linAsSaveImageFile.Location = new System.Drawing.Point(307, 523);
+            this.linAsSaveImageFile.Location = new System.Drawing.Point(513, 523);
             this.linAsSaveImageFile.Name = "linAsSaveImageFile";
             this.linAsSaveImageFile.Size = new System.Drawing.Size(65, 12);
             this.linAsSaveImageFile.TabIndex = 5;
@@ -259,24 +258,11 @@
             this.linAsSaveImageFile.Text = "图像另存为";
             this.linAsSaveImageFile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linAsSaveImageFile_LinkClicked);
             // 
-            // linkAutoImageSize
-            // 
-            this.linkAutoImageSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkAutoImageSize.AutoSize = true;
-            this.linkAutoImageSize.Location = new System.Drawing.Point(402, 523);
-            this.linkAutoImageSize.Name = "linkAutoImageSize";
-            this.linkAutoImageSize.Size = new System.Drawing.Size(77, 12);
-            this.linkAutoImageSize.TabIndex = 6;
-            this.linkAutoImageSize.TabStop = true;
-            this.linkAutoImageSize.Text = "图像扩大一倍";
-            this.linkAutoImageSize.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAutoImageSize_LinkClicked);
-            // 
             // OCRImage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 551);
-            this.Controls.Add(this.linkAutoImageSize);
+            this.ClientSize = new System.Drawing.Size(901, 551);
             this.Controls.Add(this.linAsSaveImageFile);
             this.Controls.Add(this.rbSouceImageSize);
             this.Controls.Add(this.rbAutoImageSize);
@@ -312,7 +298,6 @@
         private System.Windows.Forms.LinkLabel linkEditImageSet;
         private System.Windows.Forms.CheckBox ckbUseWhitelList;
         private System.Windows.Forms.LinkLabel linAsSaveImageFile;
-        private System.Windows.Forms.LinkLabel linkAutoImageSize;
 
     }
 }

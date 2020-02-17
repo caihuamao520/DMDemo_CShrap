@@ -70,7 +70,7 @@ namespace DMDemo
                         using (Page pa = te.Process(px, psm))
                         {
                             string strOCRText = pa.GetText();
-                            this.txtOCRContent.Text = string.Format("时间：\r\n{0}\r\n识别内容：\r\n{1}\r\n结果信任度：{2}%", DateTime.Now.ToString(), strOCRText, (pa.GetMeanConfidence()*100));
+                            this.txtOCRContent.Text = string.Format("时间：\r\n{0}\r\n识别内容：\r\n{1}\r\n结果信任度：{2}%\r\n图像大小：{3}", DateTime.Now.ToString(), strOCRText, (pa.GetMeanConfidence() * 100), this.pictureBox1.Image.Size);
 
                         }
                     }
@@ -201,7 +201,8 @@ namespace DMDemo
             bool IsClearNoise = false;//关闭降噪
             int GrayBackgroundLimit = EditImageSet.GetEditImageSet().GrayBackgroundLimit;
             int NoiseMaxNearPoints = EditImageSet.GetEditImageSet().NoiseMaxNearPoints;
-
+            bool IsAutoImageSize = EditImageSet.GetEditImageSet().IsAutoImageSize;//自动裁剪图像
+            int AutoImageHeight = EditImageSet.GetEditImageSet().AutoImageHeight;
             try
             {
                 _ocrImage = new Bitmap(this.pictureBox1.Image);
@@ -227,6 +228,23 @@ namespace DMDemo
                     if (IsThresholding)
                     {
                         _ocrImage = imgHandle.Thresholding();//二值化
+
+                        if (IsAutoImageSize)//自动裁剪图像
+                        {
+                            _ocrImage = ImageCodeHandle.TailorImage(_ocrImage);//裁剪图像大小
+                            if (_ocrImage.Height < AutoImageHeight)
+                            {
+                                float fTemp = ((float)AutoImageHeight) / ((float)_ocrImage.Height);//缩放因子
+
+                                int iw = (int)Math.Round(_ocrImage.Width * fTemp, 0);
+                                int ih = (int)Math.Round(_ocrImage.Height * fTemp, 0);
+
+                                _ocrImage = ImageCodeHandle.KiResizeImage(_ocrImage, iw, ih);//缩放
+
+                                imgHandle = new ImageCodeHandle(_ocrImage);
+                                _ocrImage = imgHandle.Thresholding();//二值化
+                            }
+                        }
                     }
 
                     if (IsClearNoise)//黑白降噪
@@ -277,29 +295,37 @@ namespace DMDemo
             }
         }
 
-        private void linkAutoImageSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
-                if (this.pictureBox1.Image == null) return;
+        //private void linkAutoImageSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (this.pictureBox1.Image == null) return;
 
-                _ocrImage = new Bitmap(this.pictureBox1.Image);
+        //        _ocrImage = new Bitmap(this.pictureBox1.Image);
 
-                _ocrImage = ImageCodeHandle.KiResizeImage(_ocrImage, _ocrImage.Width * 2, _ocrImage.Height * 2);
+        //        _ocrImage = ImageCodeHandle.KiResizeImage(_ocrImage, _ocrImage.Width * 2, _ocrImage.Height * 2);
 
-                this.pictureBox1.Image = _ocrImage;
-                ////图像处理
-                //ImageCodeHandle imgHandle = new ImageCodeHandle(_ocrImage);
-                //int threshold = imgHandle.GetGrayValue(_ocrImage);
-                //_ocrImage = imgHandle.ToGrey();
-                //Bitmap bit = imgHandle.GetPicValidByValue(_ocrImage, threshold);
-                //this.pictureBox1.Image = bit;
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message, "异常");
-            }
-        }
+        //        this.pictureBox1.Image = _ocrImage;
+        //    }
+        //    catch (Exception ee)
+        //    {
+        //        MessageBox.Show(ee.Message, "异常");
+        //    }
+        //}
+
+        //private void linkTailorImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (this.pictureBox1.Image == null) return;
+        //        _ocrImage = new Bitmap(this.pictureBox1.Image);
+        //        this.pictureBox1.Image = ImageCodeHandle.TailorImage(_ocrImage);
+        //    }
+        //    catch (Exception ee)
+        //    {
+        //        MessageBox.Show(ee.Message, "异常");
+        //    }
+        //}
 
 
     }

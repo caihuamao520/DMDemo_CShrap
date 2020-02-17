@@ -608,6 +608,120 @@ namespace DMDemo
                 return null;
             }
         }
-        
+
+        public static Bitmap TailorImage(Bitmap bmp)
+        {
+            int x1, y1, x2, y2;
+            x1 = x2 = y1 = y2 = 0;
+
+            Color backGroundColor = bmp.GetPixel(0, 0);
+
+            #region 计算边界
+            bool isEnd = false;
+            for (int x = 0; x < bmp.Width; x++)
+            {
+                for (int y = 0; y < bmp.Height; y++)
+                {
+                    if (bmp.GetPixel(x, y) != backGroundColor)
+                    {
+                        isEnd = true;
+                        x1 = x;
+                        break;
+                    }
+                }
+
+                if (isEnd) break;
+            }
+
+            isEnd = false;
+            for (int y = 0; y < bmp.Height; y++)
+            {
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    if (bmp.GetPixel(x, y) != backGroundColor)
+                    {
+                        isEnd = true;
+                        y1 = y;
+                        break;
+                    }
+
+                    if (isEnd) break;
+                }
+            }
+
+            isEnd = false;
+            for (int x = bmp.Width-1; x >0; x--)
+            {
+                for (int y = bmp.Height-1; y >0; y--)
+                {
+                    if (bmp.GetPixel(x, y) != backGroundColor)
+                    {
+                        isEnd = true;
+                        x2 = x;
+                        break;
+                    }
+                }
+
+                if (isEnd) break;
+            }
+
+            isEnd = false;
+            for (int y = bmp.Height-1; y > 0; y--)
+            {
+                for (int x = bmp.Width-1; x > 0; x--)
+                {
+                    if (bmp.GetPixel(x, y) != backGroundColor)
+                    {
+                        isEnd = true;
+                        y2 = y;
+                        break;
+                    }
+
+                    if (isEnd) break;
+                }
+            }
+            #endregion
+
+            int temp = x1 - 5;
+            if (temp > 0)
+            {
+                x1 = temp;
+            }
+
+            temp = y1 - 5;
+            if (temp > 0)
+            {
+                y1 = temp;
+            }
+
+            temp = x2 + 5;
+            if (temp < bmp.Width)
+            {
+                x2 = temp;
+            }
+
+            temp = y2 + 5;
+            if (temp < bmp.Height)
+            {
+                y2 = temp;
+            }
+
+            int w = x2 - x1;
+            int h = y2 - y1;
+            if (w > 0 && h > 0)
+            {
+                Rectangle rec = new Rectangle(new Point(x1, y1), new Size(w, h));
+                Bitmap ResultImag = new Bitmap(w, h);
+                Graphics g = Graphics.FromImage(ResultImag);
+                g.DrawImage(bmp, new Rectangle(0, 0, w, h), rec, GraphicsUnit.Pixel);
+                g.Dispose();
+
+                return ResultImag;
+            }
+            else
+            {
+                return bmp;
+            }
+        }
     }
 }
