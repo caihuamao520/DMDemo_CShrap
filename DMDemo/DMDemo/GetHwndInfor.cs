@@ -29,7 +29,9 @@ namespace DMDemo
         private string _HwbdProcessPath = string.Empty;//句柄线程名称
         private Point _mousePoint;
         private int _hwnd;
-        private int _hwndParent;
+        private int _hwndTopFrom;
+        private string _topFromTitle = string.Empty;
+        private string _yopFromClassName = string.Empty;
         /// <summary>
         /// 句柄
         /// </summary>
@@ -43,11 +45,31 @@ namespace DMDemo
         /// <summary>
         /// 父窗体句柄
         /// </summary>
-        public int _HwndParent
+        public int HwndTopFrom
         {
             get
             {
-                return _hwndParent;
+                return _hwndTopFrom;
+            }
+        }
+        /// <summary>
+        /// 父窗体句柄内容
+        /// </summary>
+        public string TopFromTitle
+        {
+            get
+            {
+                return _topFromTitle;
+            }
+        }
+        /// <summary>
+        /// 父窗体类名
+        /// </summary>
+        public string TopFromClassName
+        {
+            get
+            {
+                return _yopFromClassName;
             }
         }
         /// <summary>
@@ -134,10 +156,13 @@ namespace DMDemo
                 {
                     _mousePoint = MousePosition;
                     _hwnd = mydm.GetPointWindow(_mousePoint.X, _mousePoint.Y);//获取句柄
-                    _hwndParent=mydm.GetWindow(_hwnd, 0);
-
                     _hwndTitle = mydm.GetWindowTitle(_hwnd);
                     _hwndClassName = mydm.GetWindowClass(_hwnd);
+                    
+                    _hwndTopFrom=mydm.GetWindow(_hwnd, 7);
+                    _topFromTitle = mydm.GetWindowTitle(_hwndTopFrom); ;
+                    _yopFromClassName = mydm.GetWindowClass(_hwndTopFrom);
+                                        
                     _HwbdProcessPath = mydm.GetWindowProcessPath(_hwnd);
 
                     object x1, y1, x2, y2;
@@ -256,6 +281,43 @@ namespace DMDemo
             }
             return FormHwndList;
         }
+        /// <summary>
+        /// 计算父窗体坐标距离目标组件的偏移量
+        /// </summary>
+        /// <param name="parentHwnd"></param>
+        /// <param name="mousePoint"></param>
+        /// <returns></returns>
+        public Point CalculationTopFormOffsetPoint(int parentHwnd, Point mousePoint)
+        {
+            Point ResultPoint = new Point();
+            object hwndS_x, hwndS_y, hwndE_x, hwndE_y;//父窗体位置
+            if (mydm.GetClientRect(parentHwnd, out hwndS_x, out hwndS_y, out hwndE_x, out hwndE_y) == 1)
+            {
+                ResultPoint = new Point(mousePoint.X - int.Parse(hwndS_x.ToString()), mousePoint.Y - int.Parse(hwndS_y.ToString()));
+            }
+            return ResultPoint;
+        }
+        /// <summary>
+        /// 依据父窗体和偏移量获取子窗体
+        /// </summary>
+        /// <param name="parentHwnd"></param>
+        /// <param name="mousePoint"></param>
+        /// <returns></returns>
+        public static int ParentHwndAndOffsetPointGetHwnd(int parentHwnd, Point offsetPoint)
+        { 
+            object hwndS_x, hwndS_y, hwndE_x, hwndE_y;//父窗体位置
+            if (mydm.GetClientRect(parentHwnd, out hwndS_x, out hwndS_y, out hwndE_x, out hwndE_y) == 1)
+            {
+                Point temp = new Point(offsetPoint.X + int.Parse(hwndS_x.ToString()), offsetPoint.Y + int.Parse(hwndS_y.ToString()));
+                return mydm.GetPointWindow(temp.X, temp.Y);
+                //return mydm.GetPointWindow(offsetPoint.X + int.Parse(hwndS_x.ToString()), offsetPoint.Y + int.Parse(hwndS_y.ToString()));
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         /// <summary>
         /// 获取顶层窗口
         /// </summary>

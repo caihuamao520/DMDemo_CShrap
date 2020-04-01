@@ -43,7 +43,10 @@ namespace DMDemo
                 {
                     iActiveHwnd = getHwnd.intHwnd;
                     this.txtHwnd.Text = iActiveHwnd.ToString();
-                    this.txtTitle.Text = string.Format("文本：{0}\r\n类名：{1}\r\n进程路径：{2}\r\n父窗体句柄：{3}\r\n鼠标位置：{4}", getHwnd.HwndTitle, getHwnd.HwndClassName, getHwnd.HwndProcessPath, getHwnd._HwndParent, getHwnd.MousePoint);
+                    this.txtTitle.Text = string.Format("文本：{0}\r\n类名：{1}\r\n进程路径：{2}\r\n顶层窗体句柄：{3}\r\n鼠标位置：{4}\r\n组件距离父窗体的偏移量：{5}\r\n顶层窗体类名：{6}\r\n顶层窗体文本：{7}",
+                         getHwnd.HwndTitle, getHwnd.HwndClassName, getHwnd.HwndProcessPath, getHwnd.HwndTopFrom, getHwnd.MousePoint, 
+                         getHwnd.CalculationTopFormOffsetPoint(GetHwndInfor.GetTopFormHwnd(iActiveHwnd), getHwnd.MousePoint),
+                         getHwnd.TopFromClassName, getHwnd.TopFromTitle);
 
                     this.btnGetActiveLocation.Text = "获取位置";
                 }
@@ -136,7 +139,7 @@ namespace DMDemo
                 MessageBox.Show(ee.Message, "异常");
             }
         }
-        private int TopWindowHwnd = 0;
+        public int TopWindowHwnd = 0;
         private string _topFormClassName = string.Empty;
         private string _topFormTitle = string.Empty;
         private void btnSelectHwnd_Click(object sender, EventArgs e)
@@ -218,9 +221,41 @@ namespace DMDemo
             }
             else
             {
-                MessageBox.Show(string.Format("获取到{0}个相同符合条件的句柄位置。", list.Count), "不能唯一确定", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                
+                MessageBox.Show(string.Format("获取到{0}个相同符合条件的句柄位置。", list.Count), "不能唯一确定", MessageBoxButtons.OK, MessageBoxIcon.Warning);                
             }
+        }
+
+        private void btnLikeHwnd2_Click(object sender, EventArgs e)
+        {
+            List<int> list = GetHwndInfor.ClassNameAndTitleToParentHwnd(this.txtParentContent.Text, this.txtParentClassName.Text);
+            if (list.Count == 1)
+            {
+                int tempHwnd = list[0];
+                Regex rg = new Regex("^(?<x>[0-9]+),(?<y>[0-9]+)$");
+                if (rg.IsMatch(this.txtOffsetPoint.Text))
+                {
+                    GroupCollection group = rg.Match(this.txtOffsetPoint.Text).Groups;
+                    Point p = new Point(int.Parse(group["x"].ToString()), int.Parse(group["y"].ToString()));
+
+                    iActiveHwnd = GetHwndInfor.ParentHwndAndOffsetPointGetHwnd(tempHwnd, p);
+                    this.txtHwnd.Text = iActiveHwnd.ToString();
+                    this.txtTitle.Text = GetHwndInfor.GetHwndTitle(iActiveHwnd);
+                    MessageBox.Show("获取成功。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                else
+                {
+                    MessageBox.Show("错误的鼠标位置，正确的格式(x,y):23,89", "输入错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format("获取到{0}个相同符合条件的句柄位置。", list.Count), "不能唯一确定", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnGetActiveLocation_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

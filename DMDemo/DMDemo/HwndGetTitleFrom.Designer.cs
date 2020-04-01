@@ -44,6 +44,17 @@
             this.btnLikeHwnd = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.txtLikeTitle = new System.Windows.Forms.TextBox();
+            this.btnLikeHwnd2 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtParentClassName = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtParentContent = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtOffsetPoint = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnGetActiveLocation
@@ -54,6 +65,7 @@
             this.btnGetActiveLocation.TabIndex = 0;
             this.btnGetActiveLocation.Text = "获取位置";
             this.btnGetActiveLocation.UseVisualStyleBackColor = true;
+            this.btnGetActiveLocation.Click += new System.EventHandler(this.btnGetActiveLocation_Click);
             this.btnGetActiveLocation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGetActiveLocation_MouseDown);
             // 
             // label1
@@ -76,10 +88,11 @@
             // 
             // txtTitle
             // 
+            this.txtTitle.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtTitle.Location = new System.Drawing.Point(26, 90);
             this.txtTitle.Multiline = true;
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(226, 138);
+            this.txtTitle.Size = new System.Drawing.Size(620, 302);
             this.txtTitle.TabIndex = 3;
             // 
             // txtHwnd
@@ -94,18 +107,18 @@
             // btnRealTimeGetHwndData
             // 
             this.btnRealTimeGetHwndData.Enabled = false;
-            this.btnRealTimeGetHwndData.Location = new System.Drawing.Point(267, 187);
+            this.btnRealTimeGetHwndData.Location = new System.Drawing.Point(652, 351);
             this.btnRealTimeGetHwndData.Name = "btnRealTimeGetHwndData";
             this.btnRealTimeGetHwndData.Size = new System.Drawing.Size(131, 41);
             this.btnRealTimeGetHwndData.TabIndex = 5;
-            this.btnRealTimeGetHwndData.Text = "开始同步获取内容";
+            this.btnRealTimeGetHwndData.Text = "同步当前数据";
             this.btnRealTimeGetHwndData.UseVisualStyleBackColor = true;
             this.btnRealTimeGetHwndData.Click += new System.EventHandler(this.btnRealTimeGetHwndData_Click);
             // 
             // linkRegsActiveX
             // 
             this.linkRegsActiveX.AutoSize = true;
-            this.linkRegsActiveX.Location = new System.Drawing.Point(265, 138);
+            this.linkRegsActiveX.Location = new System.Drawing.Point(659, 312);
             this.linkRegsActiveX.Name = "linkRegsActiveX";
             this.linkRegsActiveX.Size = new System.Drawing.Size(77, 12);
             this.linkRegsActiveX.TabIndex = 6;
@@ -115,7 +128,7 @@
             // 
             // txtClassName
             // 
-            this.txtClassName.Location = new System.Drawing.Point(28, 295);
+            this.txtClassName.Location = new System.Drawing.Point(11, 76);
             this.txtClassName.Multiline = true;
             this.txtClassName.Name = "txtClassName";
             this.txtClassName.ReadOnly = true;
@@ -125,7 +138,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 280);
+            this.label3.Location = new System.Drawing.Point(9, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 8;
@@ -133,7 +146,7 @@
             // 
             // btnSelectHwnd
             // 
-            this.btnSelectHwnd.Location = new System.Drawing.Point(267, 239);
+            this.btnSelectHwnd.Location = new System.Drawing.Point(250, 20);
             this.btnSelectHwnd.Name = "btnSelectHwnd";
             this.btnSelectHwnd.Size = new System.Drawing.Size(131, 33);
             this.btnSelectHwnd.TabIndex = 9;
@@ -144,7 +157,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(23, 249);
+            this.label5.Location = new System.Drawing.Point(6, 30);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 12);
             this.label5.TabIndex = 12;
@@ -152,14 +165,14 @@
             // 
             // txtMousePoint
             // 
-            this.txtMousePoint.Location = new System.Drawing.Point(94, 246);
+            this.txtMousePoint.Location = new System.Drawing.Point(77, 27);
             this.txtMousePoint.Name = "txtMousePoint";
             this.txtMousePoint.Size = new System.Drawing.Size(157, 21);
             this.txtMousePoint.TabIndex = 13;
             // 
             // btnLikeHwnd
             // 
-            this.btnLikeHwnd.Location = new System.Drawing.Point(267, 295);
+            this.btnLikeHwnd.Location = new System.Drawing.Point(250, 76);
             this.btnLikeHwnd.Name = "btnLikeHwnd";
             this.btnLikeHwnd.Size = new System.Drawing.Size(131, 68);
             this.btnLikeHwnd.TabIndex = 14;
@@ -170,7 +183,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 327);
+            this.label6.Location = new System.Drawing.Point(7, 108);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(137, 12);
             this.label6.TabIndex = 16;
@@ -178,25 +191,116 @@
             // 
             // txtLikeTitle
             // 
-            this.txtLikeTitle.Location = new System.Drawing.Point(26, 342);
+            this.txtLikeTitle.Location = new System.Drawing.Point(9, 123);
             this.txtLikeTitle.Multiline = true;
             this.txtLikeTitle.Name = "txtLikeTitle";
             this.txtLikeTitle.Size = new System.Drawing.Size(225, 21);
             this.txtLikeTitle.TabIndex = 15;
             // 
+            // btnLikeHwnd2
+            // 
+            this.btnLikeHwnd2.Location = new System.Drawing.Point(249, 70);
+            this.btnLikeHwnd2.Name = "btnLikeHwnd2";
+            this.btnLikeHwnd2.Size = new System.Drawing.Size(131, 84);
+            this.btnLikeHwnd2.TabIndex = 17;
+            this.btnLikeHwnd2.Text = "父窗体+间距查找句柄";
+            this.btnLikeHwnd2.UseVisualStyleBackColor = true;
+            this.btnLikeHwnd2.Click += new System.EventHandler(this.btnLikeHwnd2_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.txtClassName);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.txtLikeTitle);
+            this.groupBox1.Controls.Add(this.btnSelectHwnd);
+            this.groupBox1.Controls.Add(this.btnLikeHwnd);
+            this.groupBox1.Controls.Add(this.txtMousePoint);
+            this.groupBox1.Location = new System.Drawing.Point(20, 398);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(386, 173);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "方式1";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txtOffsetPoint);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.txtParentContent);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.txtParentClassName);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.btnLikeHwnd2);
+            this.groupBox2.Location = new System.Drawing.Point(412, 398);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(386, 173);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "方式2(目前最靠谱)";
+            // 
+            // txtParentClassName
+            // 
+            this.txtParentClassName.Location = new System.Drawing.Point(11, 40);
+            this.txtParentClassName.Multiline = true;
+            this.txtParentClassName.Name = "txtParentClassName";
+            this.txtParentClassName.Size = new System.Drawing.Size(369, 21);
+            this.txtParentClassName.TabIndex = 18;
+            this.txtParentClassName.Text = "WindowsForms10.Window.8.app.0.33c0d9d";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 25);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(89, 12);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "顶层窗体类名：";
+            // 
+            // txtParentContent
+            // 
+            this.txtParentContent.Location = new System.Drawing.Point(11, 88);
+            this.txtParentContent.Multiline = true;
+            this.txtParentContent.Name = "txtParentContent";
+            this.txtParentContent.Size = new System.Drawing.Size(223, 21);
+            this.txtParentContent.TabIndex = 20;
+            this.txtParentContent.Text = "收银系统";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 73);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 12);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "顶层窗体文本：";
+            // 
+            // txtOffsetPoint
+            // 
+            this.txtOffsetPoint.Location = new System.Drawing.Point(11, 133);
+            this.txtOffsetPoint.Multiline = true;
+            this.txtOffsetPoint.Name = "txtOffsetPoint";
+            this.txtOffsetPoint.Size = new System.Drawing.Size(223, 21);
+            this.txtOffsetPoint.TabIndex = 22;
+            this.txtOffsetPoint.Text = "129,728";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 118);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(161, 12);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "组件距离顶层窗体的偏移量：";
+            // 
             // HwndGetTitleFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(410, 391);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtLikeTitle);
-            this.Controls.Add(this.btnLikeHwnd);
-            this.Controls.Add(this.txtMousePoint);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.btnSelectHwnd);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtClassName);
+            this.ClientSize = new System.Drawing.Size(820, 592);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.linkRegsActiveX);
             this.Controls.Add(this.btnRealTimeGetHwndData);
             this.Controls.Add(this.txtHwnd);
@@ -212,6 +316,10 @@
             this.Text = "智能识别窗体DEMO";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrom_FormClosing);
             this.Load += new System.EventHandler(this.MainFrom_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,6 +342,15 @@
         private System.Windows.Forms.Button btnLikeHwnd;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtLikeTitle;
+        private System.Windows.Forms.Button btnLikeHwnd2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox txtOffsetPoint;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtParentContent;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtParentClassName;
+        private System.Windows.Forms.Label label4;
     }
 }
 
