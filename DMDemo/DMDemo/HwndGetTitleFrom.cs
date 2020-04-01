@@ -45,7 +45,8 @@ namespace DMDemo
                     this.txtHwnd.Text = iActiveHwnd.ToString();
                     this.txtTitle.Text = string.Format("文本：{0}\r\n类名：{1}\r\n进程路径：{2}\r\n顶层窗体句柄：{3}\r\n鼠标位置：{4}\r\n组件距离父窗体的偏移量：{5}\r\n顶层窗体类名：{6}\r\n顶层窗体文本：{7}",
                          getHwnd.HwndTitle, getHwnd.HwndClassName, getHwnd.HwndProcessPath, getHwnd.HwndTopFrom, getHwnd.MousePoint, 
-                         getHwnd.CalculationTopFormOffsetPoint(GetHwndInfor.GetTopFormHwnd(iActiveHwnd), getHwnd.MousePoint),
+                         //getHwnd.CalculationTopFormOffsetPoint(GetHwndInfor.GetTopFormHwnd(iActiveHwnd), getHwnd.MousePoint),
+                         getHwnd.CalculationTopFormOffsetPoint(iActiveHwnd),
                          getHwnd.TopFromClassName, getHwnd.TopFromTitle);
 
                     this.btnGetActiveLocation.Text = "获取位置";
@@ -65,7 +66,7 @@ namespace DMDemo
         private Thread RealTimeGetContent;
         private void btnRealTimeGetHwndData_Click(object sender, EventArgs e)
         {
-            if (this.btnRealTimeGetHwndData.Text == "开始同步获取内容")
+            if (this.btnRealTimeGetHwndData.Text == "同步当前数据")
             {
                 RealTimeGetContent = new Thread(new ThreadStart(GetHwndTitle));
                 RealTimeGetContent.Start();
@@ -78,7 +79,7 @@ namespace DMDemo
                     RealTimeGetContent.Abort();
                 }
 
-                this.btnRealTimeGetHwndData.Text = "开始同步获取内容";
+                this.btnRealTimeGetHwndData.Text = "同步当前数据";
             }
         }
 
@@ -251,11 +252,6 @@ namespace DMDemo
             {
                 MessageBox.Show(string.Format("获取到{0}个相同符合条件的句柄位置。", list.Count), "不能唯一确定", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        private void btnGetActiveLocation_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

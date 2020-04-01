@@ -287,13 +287,47 @@ namespace DMDemo
         /// <param name="parentHwnd"></param>
         /// <param name="mousePoint"></param>
         /// <returns></returns>
-        public Point CalculationTopFormOffsetPoint(int parentHwnd, Point mousePoint)
+        public Point CalculationTopFormOffsetPoint(int Hwnd)
         {
-            Point ResultPoint = new Point();
-            object hwndS_x, hwndS_y, hwndE_x, hwndE_y;//父窗体位置
-            if (mydm.GetClientRect(parentHwnd, out hwndS_x, out hwndS_y, out hwndE_x, out hwndE_y) == 1)
+            Point ResultPoint = new Point(0,0);
+            if (Hwnd == 0)
+                return ResultPoint;
+            object hwndS_x, hwndS_y, hwndE_x, hwndE_y;
+            if (mydm.GetClientRect(Hwnd, out hwndS_x, out hwndS_y, out hwndE_x, out hwndE_y) == 1)
             {
-                ResultPoint = new Point(mousePoint.X - int.Parse(hwndS_x.ToString()), mousePoint.Y - int.Parse(hwndS_y.ToString()));
+                int topFormHwnd = mydm.GetWindow(Hwnd, 7);//顶层窗体句柄
+                object tophwndS_x, tophwndS_y, tophwndE_x, tophwndE_y;
+                if (mydm.GetClientRect(topFormHwnd, out tophwndS_x, out tophwndS_y, out tophwndE_x, out tophwndE_y) == 1)
+                {
+                    //开始转换数据
+                    int ihwndS_x,ihwndS_y, ihwndE_y;
+                    int itophwndS_x, itophwndS_y;
+                    if (!int.TryParse(hwndS_x.ToString(), out ihwndS_x))
+                    {
+                        return ResultPoint;//转换失败
+                    }
+                    if (!int.TryParse(hwndS_y.ToString(), out ihwndS_y))
+                    {
+                        return ResultPoint;//转换失败
+                    }
+                    if(!int.TryParse(hwndE_y.ToString(),out ihwndE_y ))
+                    {
+                        return ResultPoint;//转换失败
+                    }
+                    if (!int.TryParse(tophwndS_x.ToString(), out itophwndS_x))
+                    {
+                        return ResultPoint;//转换失败
+                    }
+                    if (!int.TryParse(tophwndS_y.ToString(), out itophwndS_y))
+                    {
+                        return ResultPoint;//转换失败
+                    }
+
+                    int pyl = (ihwndE_y - ihwndS_y) / 4;//计算偏移量
+                    Point xnPoin = new Point(ihwndS_x + pyl, ihwndS_y + pyl);//参考点
+
+                    ResultPoint = new Point(xnPoin.X - itophwndS_x, xnPoin.Y - itophwndS_y);
+                }
             }
             return ResultPoint;
         }
@@ -304,13 +338,25 @@ namespace DMDemo
         /// <param name="mousePoint"></param>
         /// <returns></returns>
         public static int ParentHwndAndOffsetPointGetHwnd(int parentHwnd, Point offsetPoint)
-        { 
-            object hwndS_x, hwndS_y, hwndE_x, hwndE_y;//父窗体位置
+        {
+            if (parentHwnd == 0)
+            {
+                return 0;
+            }
+            object hwndS_x, hwndS_y, hwndE_x, hwndE_y;//顶级窗体位置
             if (mydm.GetClientRect(parentHwnd, out hwndS_x, out hwndS_y, out hwndE_x, out hwndE_y) == 1)
             {
-                Point temp = new Point(offsetPoint.X + int.Parse(hwndS_x.ToString()), offsetPoint.Y + int.Parse(hwndS_y.ToString()));
+                int ihwndS_x, ihwndS_y;
+                if (!int.TryParse(hwndS_x.ToString(), out ihwndS_x))
+                {
+                    return 0;//转换失败
+                }
+                if (!int.TryParse(hwndS_y.ToString(), out ihwndS_y))
+                {
+                    return 0;//转换失败
+                }
+                Point temp = new Point(offsetPoint.X + ihwndS_x, offsetPoint.Y + ihwndS_y);
                 return mydm.GetPointWindow(temp.X, temp.Y);
-                //return mydm.GetPointWindow(offsetPoint.X + int.Parse(hwndS_x.ToString()), offsetPoint.Y + int.Parse(hwndS_y.ToString()));
             }
             else
             {

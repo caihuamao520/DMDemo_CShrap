@@ -65,7 +65,6 @@
             this.btnGetActiveLocation.TabIndex = 0;
             this.btnGetActiveLocation.Text = "获取位置";
             this.btnGetActiveLocation.UseVisualStyleBackColor = true;
-            this.btnGetActiveLocation.Click += new System.EventHandler(this.btnGetActiveLocation_Click);
             this.btnGetActiveLocation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGetActiveLocation_MouseDown);
             // 
             // label1
@@ -283,7 +282,7 @@
             this.txtOffsetPoint.Name = "txtOffsetPoint";
             this.txtOffsetPoint.Size = new System.Drawing.Size(223, 21);
             this.txtOffsetPoint.TabIndex = 22;
-            this.txtOffsetPoint.Text = "129,728";
+            this.txtOffsetPoint.Text = "119,720";
             // 
             // label8
             // 
