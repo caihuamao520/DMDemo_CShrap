@@ -153,7 +153,6 @@ namespace DMDemo
             if (TopWindowHwnd != 0)
             {
                 //收银系统
-
                 if (!GetHwndInfor.TopShowForm(TopWindowHwnd))
                 {
                     MessageBox.Show("置顶窗口失败", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -238,7 +237,7 @@ namespace DMDemo
                     GroupCollection group = rg.Match(this.txtOffsetPoint.Text).Groups;
                     Point p = new Point(int.Parse(group["x"].ToString()), int.Parse(group["y"].ToString()));
 
-                    iActiveHwnd = GetHwndInfor.ParentHwndAndOffsetPointGetHwnd(tempHwnd, p);
+                    iActiveHwnd = GetHwndInfor.TopFromHwndAndOffsetPointGetHwnd(tempHwnd, p);
                     this.txtHwnd.Text = iActiveHwnd.ToString();
                     this.txtTitle.Text = GetHwndInfor.GetHwndTitle(iActiveHwnd);
                     MessageBox.Show("获取成功。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);

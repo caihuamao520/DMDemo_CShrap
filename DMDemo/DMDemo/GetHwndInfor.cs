@@ -332,12 +332,12 @@ namespace DMDemo
             return ResultPoint;
         }
         /// <summary>
-        /// 依据父窗体和偏移量获取子窗体
+        /// 依据顶层窗体和偏移量获取子窗体
         /// </summary>
         /// <param name="parentHwnd"></param>
         /// <param name="mousePoint"></param>
         /// <returns></returns>
-        public static int ParentHwndAndOffsetPointGetHwnd(int parentHwnd, Point offsetPoint)
+        public static int TopFromHwndAndOffsetPointGetHwnd(int parentHwnd, Point offsetPoint)
         {
             if (parentHwnd == 0)
             {
