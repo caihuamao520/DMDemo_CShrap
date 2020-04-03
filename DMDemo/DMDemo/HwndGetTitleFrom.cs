@@ -49,6 +49,8 @@ namespace DMDemo
                          getHwnd.CalculationTopFormOffsetPoint(iActiveHwnd),
                          getHwnd.TopFromClassName, getHwnd.TopFromTitle);
 
+                    //getHwnd.TopFromTitle
+
                     this.btnGetActiveLocation.Text = "获取位置";
                 }
                 else
@@ -58,9 +60,9 @@ namespace DMDemo
 
                 this.Show();
             }
-            catch (Exception ee)
+            catch (Exception ex)
             {
-                MessageBox.Show(ee.Message, "异常");
+                MessageBox.Show(ex.Message, "异常");
             }
         }
         private Thread RealTimeGetContent;
