@@ -48,11 +48,16 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtParentClassName = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtParentContent = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtParentTitle = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.txtOffsetPoint = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.txtTopFormTitle = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtTopFormClassName = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ckbIsHidForm = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -91,7 +96,7 @@
             this.txtTitle.Location = new System.Drawing.Point(26, 90);
             this.txtTitle.Multiline = true;
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(620, 302);
+            this.txtTitle.Size = new System.Drawing.Size(620, 234);
             this.txtTitle.TabIndex = 3;
             // 
             // txtHwnd
@@ -106,7 +111,7 @@
             // btnRealTimeGetHwndData
             // 
             this.btnRealTimeGetHwndData.Enabled = false;
-            this.btnRealTimeGetHwndData.Location = new System.Drawing.Point(652, 351);
+            this.btnRealTimeGetHwndData.Location = new System.Drawing.Point(661, 283);
             this.btnRealTimeGetHwndData.Name = "btnRealTimeGetHwndData";
             this.btnRealTimeGetHwndData.Size = new System.Drawing.Size(131, 41);
             this.btnRealTimeGetHwndData.TabIndex = 5;
@@ -117,7 +122,7 @@
             // linkRegsActiveX
             // 
             this.linkRegsActiveX.AutoSize = true;
-            this.linkRegsActiveX.Location = new System.Drawing.Point(659, 312);
+            this.linkRegsActiveX.Location = new System.Drawing.Point(668, 244);
             this.linkRegsActiveX.Name = "linkRegsActiveX";
             this.linkRegsActiveX.Size = new System.Drawing.Size(77, 12);
             this.linkRegsActiveX.TabIndex = 6;
@@ -198,7 +203,7 @@
             // 
             // btnLikeHwnd2
             // 
-            this.btnLikeHwnd2.Location = new System.Drawing.Point(249, 70);
+            this.btnLikeHwnd2.Location = new System.Drawing.Point(249, 118);
             this.btnLikeHwnd2.Name = "btnLikeHwnd2";
             this.btnLikeHwnd2.Size = new System.Drawing.Size(131, 84);
             this.btnLikeHwnd2.TabIndex = 17;
@@ -216,7 +221,7 @@
             this.groupBox1.Controls.Add(this.btnSelectHwnd);
             this.groupBox1.Controls.Add(this.btnLikeHwnd);
             this.groupBox1.Controls.Add(this.txtMousePoint);
-            this.groupBox1.Location = new System.Drawing.Point(20, 398);
+            this.groupBox1.Location = new System.Drawing.Point(20, 334);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(386, 173);
             this.groupBox1.TabIndex = 18;
@@ -225,55 +230,59 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtParentClassName);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.txtParentTitle);
+            this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.txtOffsetPoint);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.txtParentContent);
+            this.groupBox2.Controls.Add(this.txtTopFormTitle);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.txtParentClassName);
+            this.groupBox2.Controls.Add(this.txtTopFormClassName);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.btnLikeHwnd2);
-            this.groupBox2.Location = new System.Drawing.Point(412, 398);
+            this.groupBox2.Location = new System.Drawing.Point(412, 334);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(386, 173);
+            this.groupBox2.Size = new System.Drawing.Size(386, 258);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "方式2(目前最靠谱)";
             // 
             // txtParentClassName
             // 
-            this.txtParentClassName.Location = new System.Drawing.Point(11, 40);
+            this.txtParentClassName.Location = new System.Drawing.Point(11, 222);
             this.txtParentClassName.Multiline = true;
             this.txtParentClassName.Name = "txtParentClassName";
             this.txtParentClassName.Size = new System.Drawing.Size(369, 21);
-            this.txtParentClassName.TabIndex = 18;
-            this.txtParentClassName.Text = "WindowsForms10.Window.8.app.0.33c0d9d";
+            this.txtParentClassName.TabIndex = 26;
+            this.txtParentClassName.Text = "WindowsForms10.Window.8.app.0.14b2c3b_r9_ad1";
             // 
-            // label4
+            // label10
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 25);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 12);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "顶层窗体类名：";
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 207);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(77, 12);
+            this.label10.TabIndex = 27;
+            this.label10.Text = "父窗体类名：";
             // 
-            // txtParentContent
+            // txtParentTitle
             // 
-            this.txtParentContent.Location = new System.Drawing.Point(11, 88);
-            this.txtParentContent.Multiline = true;
-            this.txtParentContent.Name = "txtParentContent";
-            this.txtParentContent.Size = new System.Drawing.Size(223, 21);
-            this.txtParentContent.TabIndex = 20;
-            this.txtParentContent.Text = "收银系统";
+            this.txtParentTitle.Location = new System.Drawing.Point(11, 176);
+            this.txtParentTitle.Multiline = true;
+            this.txtParentTitle.Name = "txtParentTitle";
+            this.txtParentTitle.Size = new System.Drawing.Size(223, 21);
+            this.txtParentTitle.TabIndex = 24;
+            this.txtParentTitle.Text = "收 款";
             // 
-            // label7
+            // label9
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 73);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 12);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "顶层窗体文本：";
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 161);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 12);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "父窗体文本：";
             // 
             // txtOffsetPoint
             // 
@@ -282,7 +291,7 @@
             this.txtOffsetPoint.Name = "txtOffsetPoint";
             this.txtOffsetPoint.Size = new System.Drawing.Size(223, 21);
             this.txtOffsetPoint.TabIndex = 22;
-            this.txtOffsetPoint.Text = "119,720";
+            this.txtOffsetPoint.Text = "813,695";
             // 
             // label8
             // 
@@ -293,11 +302,58 @@
             this.label8.TabIndex = 23;
             this.label8.Text = "组件距离顶层窗体的偏移量：";
             // 
+            // txtTopFormTitle
+            // 
+            this.txtTopFormTitle.Location = new System.Drawing.Point(11, 88);
+            this.txtTopFormTitle.Multiline = true;
+            this.txtTopFormTitle.Name = "txtTopFormTitle";
+            this.txtTopFormTitle.Size = new System.Drawing.Size(223, 21);
+            this.txtTopFormTitle.TabIndex = 20;
+            this.txtTopFormTitle.Text = "收银系统";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 73);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 12);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "顶层窗体文本：";
+            // 
+            // txtTopFormClassName
+            // 
+            this.txtTopFormClassName.Location = new System.Drawing.Point(11, 40);
+            this.txtTopFormClassName.Multiline = true;
+            this.txtTopFormClassName.Name = "txtTopFormClassName";
+            this.txtTopFormClassName.Size = new System.Drawing.Size(369, 21);
+            this.txtTopFormClassName.TabIndex = 18;
+            this.txtTopFormClassName.Text = "WindowsForms10.Window.8.app.0.14b2c3b_r9_ad1";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 25);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(89, 12);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "顶层窗体类名：";
+            // 
+            // ckbIsHidForm
+            // 
+            this.ckbIsHidForm.AutoSize = true;
+            this.ckbIsHidForm.Location = new System.Drawing.Point(423, 48);
+            this.ckbIsHidForm.Name = "ckbIsHidForm";
+            this.ckbIsHidForm.Size = new System.Drawing.Size(156, 16);
+            this.ckbIsHidForm.TabIndex = 22;
+            this.ckbIsHidForm.Text = "获取位置时隐藏当前窗口";
+            this.ckbIsHidForm.UseVisualStyleBackColor = true;
+            // 
             // HwndGetTitleFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 592);
+            this.ClientSize = new System.Drawing.Size(820, 595);
+            this.Controls.Add(this.ckbIsHidForm);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.linkRegsActiveX);
@@ -346,10 +402,15 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtOffsetPoint;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtParentContent;
+        private System.Windows.Forms.TextBox txtTopFormTitle;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtParentClassName;
+        private System.Windows.Forms.TextBox txtTopFormClassName;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtParentClassName;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtParentTitle;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox ckbIsHidForm;
     }
 }
 

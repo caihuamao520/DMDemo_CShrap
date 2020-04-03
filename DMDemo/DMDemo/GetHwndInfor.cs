@@ -31,7 +31,10 @@ namespace DMDemo
         private int _hwnd;
         private int _hwndTopFrom;
         private string _topFromTitle = string.Empty;
-        private string _yopFromClassName = string.Empty;
+        private string _topFromClassName = string.Empty;
+
+        private string _parentTitle = string.Empty;//父窗体文本
+        private string _parentClassName = string.Empty;//父窗体类名
         /// <summary>
         /// 句柄
         /// </summary>
@@ -43,7 +46,7 @@ namespace DMDemo
             }
         }
         /// <summary>
-        /// 父窗体句柄
+        /// 顶层窗体句柄
         /// </summary>
         public int HwndTopFrom
         {
@@ -53,7 +56,7 @@ namespace DMDemo
             }
         }
         /// <summary>
-        /// 父窗体句柄内容
+        /// 顶层窗体句柄内容
         /// </summary>
         public string TopFromTitle
         {
@@ -63,13 +66,13 @@ namespace DMDemo
             }
         }
         /// <summary>
-        /// 父窗体类名
+        /// 顶层窗体类名
         /// </summary>
         public string TopFromClassName
         {
             get
             {
-                return _yopFromClassName;
+                return _topFromClassName;
             }
         }
         /// <summary>
@@ -113,6 +116,28 @@ namespace DMDemo
                 return _HwbdProcessPath;
             }
         }
+
+        /// <summary>
+        /// 父窗体文本
+        /// </summary>
+        public string ParentTitle 
+        {
+            get
+            {
+                return _parentTitle;
+            }
+        }
+        /// <summary>
+        /// 父窗体类名
+        /// </summary>
+        public string ParentClassName 
+        {
+            get
+            {
+                return _parentClassName;
+            }
+        }
+
         /// <summary>
         /// 获取句柄时鼠标停留的位置
         /// </summary>
@@ -159,9 +184,13 @@ namespace DMDemo
                     _hwndTitle = mydm.GetWindowTitle(_hwnd);
                     _hwndClassName = mydm.GetWindowClass(_hwnd);
                     
+                    int parenthwnd=mydm.GetWindow(_hwnd, 0);//获取父窗体句柄
+                    _parentTitle = mydm.GetWindowTitle(parenthwnd);
+                    _parentClassName = mydm.GetWindowClass(parenthwnd);
+
                     _hwndTopFrom=mydm.GetWindow(_hwnd, 7);
-                    _topFromTitle = mydm.GetWindowTitle(_hwndTopFrom); ;
-                    _yopFromClassName = mydm.GetWindowClass(_hwndTopFrom);
+                    _topFromTitle = mydm.GetWindowTitle(_hwndTopFrom);
+                    _topFromClassName = mydm.GetWindowClass(_hwndTopFrom);
                                         
                     _HwbdProcessPath = mydm.GetWindowProcessPath(_hwnd);
 
@@ -337,11 +366,12 @@ namespace DMDemo
         /// <param name="parentHwnd"></param>
         /// <param name="mousePoint"></param>
         /// <returns></returns>
-        public static int TopFromHwndAndOffsetPointGetHwnd(int parentHwnd, Point offsetPoint)
+        public static int TopFromHwndAndOffsetPointGetHwnd(int parentHwnd, Point offsetPoint,string pramentClassName=null)
         {
+            int iResult = 0;
             if (parentHwnd == 0)
             {
-                return 0;
+                return iResult;
             }
             object hwndS_x, hwndS_y, hwndE_x, hwndE_y;//顶级窗体位置
             if (mydm.GetClientRect(parentHwnd, out hwndS_x, out hwndS_y, out hwndE_x, out hwndE_y) == 1)
@@ -356,11 +386,35 @@ namespace DMDemo
                     return 0;//转换失败
                 }
                 Point temp = new Point(offsetPoint.X + ihwndS_x, offsetPoint.Y + ihwndS_y);
-                return mydm.GetPointWindow(temp.X, temp.Y);
+
+                iResult= mydm.GetPointWindow(temp.X, temp.Y);
+                //根据父窗体判断是否符合句柄赛选
+                if (!string.IsNullOrEmpty(pramentClassName) && iResult != 0)
+                {
+                    int tempParentHwnd = mydm.GetWindow(iResult, 0);//获取父窗体句柄
+                    if (mydm.GetWindowClass(tempParentHwnd) == pramentClassName)//吻合
+                    {
+                        return iResult;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                    //if (mydm.GetWindowTitle(tempParentHwnd) == pramentTitle && mydm.GetWindowClass(tempParentHwnd) == pramentClassName)//吻合
+                    //{
+                    //    return iResult;
+                    //}
+                    //else
+                    //{
+                    //    return 0;
+                    //}
+
+                }
+                return iResult;
             }
             else
             {
-                return 0;
+                return iResult;
             }
         }
 
