@@ -269,22 +269,6 @@ namespace DMDemo
             }
         }
 
-        private void linkCreatActive_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            TextBox txt = new TextBox();
-            txt.Name = string.Format("txt_{0}", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            txt.Text = txt.Name;
-            txt.Width = 120;
-            txt.Location = new Point(10, 20);
 
-            this.gbDynamicActive.Controls.Clear();
-
-            this.gbDynamicActive.Controls.Add(txt);
-        }
-
-        private void gbDynamicActive_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }
