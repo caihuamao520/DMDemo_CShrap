@@ -7,9 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using Tesseract;
 using System.Runtime.ExceptionServices;
 using System.Drawing.Imaging;
+using System.Reflection;
+using System.Threading;
 
 namespace DMDemo
 {
@@ -25,7 +26,7 @@ namespace DMDemo
         {
             this.cbEngineMode.Text = "Default";
             this.cbImageContenMode.Text = "SingleLine";
-            
+            this.cbEngineVersion.Text = "2.4.0（兼容win xp）";
             _tesseractDataFile = Path.Combine(Application.StartupPath, "tessdata");
         }
 
@@ -36,44 +37,43 @@ namespace DMDemo
             {
                 if (File.Exists(Path.Combine(_tesseractDataFile, "eng.traineddata")))
                 {
-                    EngineMode em = (EngineMode)Enum.Parse(typeof(EngineMode), this.cbEngineMode.Text);
+                    string strFileDLL = string.Empty;
+
+                    if (this.cbEngineVersion.Text == "2.4.0（兼容win xp）")
+                    {
+                        strFileDLL = Path.Combine(Application.StartupPath, "Tesseract_2.4.dll");
+                    }
+                    else
+                    {
+                        strFileDLL = Path.Combine(Application.StartupPath, "Tesseract_3.3.dll");
+                    }
+                    if (!File.Exists(strFileDLL))
+                    {
+                        throw new Exception(string.Format("未找到 {0} 文件。", Path.GetFileName(strFileDLL)));
+                    }
+
+                    Assembly dllFromPlugin = Assembly.LoadFile(strFileDLL);
+                    Type typeTE = dllFromPlugin.GetType("Tesseract.TesseractEngine");
+                    Type typePC = dllFromPlugin.GetType("Tesseract.PixConverter");
+                    Type psmEnum = dllFromPlugin.GetType("Tesseract.PageSegMode");
+                    Type Pixs = dllFromPlugin.GetType("Tesseract.Pix");
+                    Type EngineModes = dllFromPlugin.GetType("Tesseract.EngineMode");
+                                       
+                    object oEngineMode = Enum.Parse(EngineModes, this.cbEngineMode.Text);
+                    object opsm = Enum.Parse(psmEnum, this.cbImageContenMode.Text);
+
+                    Object oTesseractEngine = Activator.CreateInstance(typeTE, new object[] { _tesseractDataFile, "eng", oEngineMode });
+
+                    MethodInfo miToPix = typePC.GetMethod("ToPix");
+                    MethodInfo miProcess = typeTE.GetMethod("Process", new Type[] { Pixs, psmEnum });
 
                     Bitmap ocrImage = new Bitmap(this.pictureBox1.Image);
-                    TesseractEngine te = new TesseractEngine(_tesseractDataFile, "eng", em);
-                    if (this.ckbUseWhitelList.Checked)
-                    {
-                        te.SetVariable("tessedit_char_whitelist", "0");
-                        te.SetVariable("tessedit_char_whitelist", "1");
-                        te.SetVariable("tessedit_char_whitelist", "2");
-                        te.SetVariable("tessedit_char_whitelist", "3");
-                        te.SetVariable("tessedit_char_whitelist", "4");
-                        te.SetVariable("tessedit_char_whitelist", "5");
-                        te.SetVariable("tessedit_char_whitelist", "6");
-                        te.SetVariable("tessedit_char_whitelist", "7");
-                        te.SetVariable("tessedit_char_whitelist", "8");
-                        te.SetVariable("tessedit_char_whitelist", "9");
-
-                        //te.SetVariable("tessedit_char_blacklist", "0");
-                        //te.SetVariable("tessedit_char_blacklist", "1");
-                        //te.SetVariable("tessedit_char_blacklist", "2");
-                        //te.SetVariable("tessedit_char_blacklist", "3");
-                        //te.SetVariable("tessedit_char_blacklist", "4");
-                        //te.SetVariable("tessedit_char_blacklist", "5");
-                        //te.SetVariable("tessedit_char_blacklist", "6");
-                        //te.SetVariable("tessedit_char_blacklist", "7");
-                        //te.SetVariable("tessedit_char_blacklist", "8");
-                        //te.SetVariable("tessedit_char_blacklist", "9");
-                    }
-                    PageSegMode psm = (PageSegMode)Enum.Parse(typeof(PageSegMode), this.cbImageContenMode.Text);
-                    using (Pix px = PixConverter.ToPix(ocrImage))
-                    {
-                        using (Page pa = te.Process(px, psm))
-                        {
-                            string strOCRText = pa.GetText();
-                            this.txtOCRContent.Text = string.Format("时间：\r\n{0}\r\n识别内容：\r\n{1}\r\n结果信任度：{2}%\r\n图像大小：{3}", DateTime.Now.ToString(), strOCRText, (pa.GetMeanConfidence() * 100), this.pictureBox1.Image.Size);
-
-                        }
-                    }
+                    Object objImagPix = miToPix.Invoke(null, new object[] { ocrImage });
+                    dynamic page = miProcess.Invoke(oTesseractEngine, new object[] { objImagPix, opsm });
+                    string strOCRText = page.GetText();
+                    this.txtOCRContent.Text = string.Format("时间：\r\n{0}\r\n识别内容：\r\n{1}\r\n结果信任度：{2}%\r\n图像大小：{3}\r\n引擎版本：{4}", 
+                        DateTime.Now.ToString(), strOCRText, (page.GetMeanConfidence() * 100), 
+                        this.pictureBox1.Image.Size,this.cbEngineVersion.Text == "2.4.0（兼容win xp）"?"2.4.0":"3.3.0");
                 }
                 else
                 {
@@ -83,6 +83,24 @@ namespace DMDemo
             catch (Exception ee)
             {
                 MessageBox.Show(ee.Message, "异常");
+            }
+        }
+
+        private void InitOCREngine()
+        {
+            string strFileDLL = string.Empty;
+
+            if (this.cbEngineVersion.Text == "2.4.0（兼容win xp）")
+            {
+                strFileDLL = Path.Combine(Application.StartupPath, "Tesseract_2.4.dll");
+            }
+            else
+            {
+                strFileDLL = Path.Combine(Application.StartupPath, "Tesseract_3.3.dll");
+            }
+            if (!File.Exists(strFileDLL))
+            {
+                throw new Exception(string.Format("未找到 {0} 文件。", Path.GetFileName(strFileDLL)));
             }
         }
 
@@ -109,12 +127,13 @@ namespace DMDemo
 
         private void btnScreenshot_Click(object sender, EventArgs e)
         {
+            this.Hide();
             try
-            {
-                this.Hide();
+            {                
                 Rectangle rcc;
                 if (GetScreenRegionSize(out rcc))
                 {
+                    
                     Bitmap bmp = new Bitmap(rcc.Width, rcc.Height);
                     using (Graphics g = Graphics.FromImage(bmp))
                     {
@@ -133,12 +152,10 @@ namespace DMDemo
 
         private void showImage(Image img)
         {
-            if (!btnOCRImage.Enabled)
-            {
-                btnOCRImage.Enabled = true;
-                btnEditImage.Enabled = true;
-                linkEditImageSet.Enabled = true;
-            }
+            btnOCRImage.Enabled = true;
+            btnEditImage.Enabled = true;
+            linkEditImageSet.Enabled = true;
+
             this.pictureBox1.Image = img;
         }
 
@@ -166,7 +183,14 @@ namespace DMDemo
                 isOK = false;
             };
 
+            screenForm.AutoScaleMode = AutoScaleMode.None;
+            screenForm.StartPosition = FormStartPosition.Manual;
+
             screenForm.ShowDialog();
+            screenForm.Dispose();
+
+            System.Threading.Thread.Sleep(100);
+            
             rcc = rc;
             return isOK;
         }
