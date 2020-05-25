@@ -324,38 +324,6 @@ namespace DMDemo
             }
         }
 
-        //private void linkAutoImageSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (this.pictureBox1.Image == null) return;
-
-        //        _ocrImage = new Bitmap(this.pictureBox1.Image);
-
-        //        _ocrImage = ImageCodeHandle.KiResizeImage(_ocrImage, _ocrImage.Width * 2, _ocrImage.Height * 2);
-
-        //        this.pictureBox1.Image = _ocrImage;
-        //    }
-        //    catch (Exception ee)
-        //    {
-        //        MessageBox.Show(ee.Message, "异常");
-        //    }
-        //}
-
-        //private void linkTailorImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (this.pictureBox1.Image == null) return;
-        //        _ocrImage = new Bitmap(this.pictureBox1.Image);
-        //        this.pictureBox1.Image = ImageCodeHandle.TailorImage(_ocrImage);
-        //    }
-        //    catch (Exception ee)
-        //    {
-        //        MessageBox.Show(ee.Message, "异常");
-        //    }
-        //}
-
 
     }
 }

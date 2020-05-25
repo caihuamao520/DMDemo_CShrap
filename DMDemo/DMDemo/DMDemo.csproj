@@ -92,6 +92,12 @@
     <Compile Include="EditImageSet.Designer.cs">
       <DependentUpon>EditImageSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="fro_AdvancedOCRImage_PlanA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fro_AdvancedOCRImage_PlanA.Designer.cs">
+      <DependentUpon>fro_AdvancedOCRImage_PlanA.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetHwndInfor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="EditImageSet.resx">
       <DependentUpon>EditImageSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fro_AdvancedOCRImage_PlanA.resx">
+      <DependentUpon>fro_AdvancedOCRImage_PlanA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GetHwndInfor.resx">
       <DependentUpon>GetHwndInfor.cs</DependentUpon>

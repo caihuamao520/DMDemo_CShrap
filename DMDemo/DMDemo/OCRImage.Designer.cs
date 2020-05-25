@@ -30,6 +30,8 @@
         {
             this.btnOCRImage = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbEngineVersion = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.linkEditImageSet = new System.Windows.Forms.LinkLabel();
             this.btnEditImage = new System.Windows.Forms.Button();
             this.cbEngineMode = new System.Windows.Forms.ComboBox();
@@ -43,8 +45,6 @@
             this.rbAutoImageSize = new System.Windows.Forms.RadioButton();
             this.rbSouceImageSize = new System.Windows.Forms.RadioButton();
             this.linAsSaveImageFile = new System.Windows.Forms.LinkLabel();
-            this.cbEngineVersion = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -82,6 +82,28 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "操作";
+            // 
+            // cbEngineVersion
+            // 
+            this.cbEngineVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEngineVersion.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbEngineVersion.FormattingEnabled = true;
+            this.cbEngineVersion.Items.AddRange(new object[] {
+            "2.4.0（兼容win xp）",
+            "3.3.0（新版）"});
+            this.cbEngineVersion.Location = new System.Drawing.Point(99, 20);
+            this.cbEngineVersion.Name = "cbEngineVersion";
+            this.cbEngineVersion.Size = new System.Drawing.Size(154, 25);
+            this.cbEngineVersion.TabIndex = 12;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(30, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "引擎版本:";
             // 
             // linkEditImageSet
             // 
@@ -248,28 +270,6 @@
             this.linAsSaveImageFile.TabStop = true;
             this.linAsSaveImageFile.Text = "图像另存为";
             this.linAsSaveImageFile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linAsSaveImageFile_LinkClicked);
-            // 
-            // cbEngineVersion
-            // 
-            this.cbEngineVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEngineVersion.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cbEngineVersion.FormattingEnabled = true;
-            this.cbEngineVersion.Items.AddRange(new object[] {
-            "2.4.0（兼容win xp）",
-            "3.3.0（新版）"});
-            this.cbEngineVersion.Location = new System.Drawing.Point(99, 20);
-            this.cbEngineVersion.Name = "cbEngineVersion";
-            this.cbEngineVersion.Size = new System.Drawing.Size(154, 25);
-            this.cbEngineVersion.TabIndex = 12;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "引擎版本:";
             // 
             // OCRImage
             // 
