@@ -11,6 +11,8 @@ using System.Runtime.ExceptionServices;
 using System.Drawing.Imaging;
 using System.Reflection;
 using System.Threading;
+using Tesseract;
+using System.Collections;
 
 namespace DMDemo
 {
@@ -35,8 +37,11 @@ namespace DMDemo
         {
             try
             {
+                Queue<string> str = new Queue<string>();
+                
                 if (File.Exists(Path.Combine(_tesseractDataFile, "eng.traineddata")))
                 {
+                    //PageSegMode.SingleLine
                     string strFileDLL = string.Empty;
 
                     if (this.cbEngineVersion.Text == "2.4.0（兼容win xp）")
