@@ -98,6 +98,12 @@
     <Compile Include="fro_AdvancedOCRImage_PlanA.Designer.cs">
       <DependentUpon>fro_AdvancedOCRImage_PlanA.cs</DependentUpon>
     </Compile>
+    <Compile Include="Fro_LookImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fro_LookImage.Designer.cs">
+      <DependentUpon>Fro_LookImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetHwndInfor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="fro_AdvancedOCRImage_PlanA.resx">
       <DependentUpon>fro_AdvancedOCRImage_PlanA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fro_LookImage.resx">
+      <DependentUpon>Fro_LookImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GetHwndInfor.resx">
       <DependentUpon>GetHwndInfor.cs</DependentUpon>

@@ -61,6 +61,7 @@
             this.btnOCR_PlanA.TabIndex = 2;
             this.btnOCR_PlanA.Text = "图像识别(DM + TesseractOCR)";
             this.btnOCR_PlanA.UseVisualStyleBackColor = true;
+            this.btnOCR_PlanA.Click += new System.EventHandler(this.btnOCR_PlanA_Click);
             // 
             // NavigationFrom
             // 

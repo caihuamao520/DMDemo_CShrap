@@ -4,14 +4,16 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DMDemo
 {
     public partial class fro_AdvancedOCRImage_PlanA : Form
     {
-        private Timer GetSystemImageTimer;
+        private System.Windows.Forms.Timer GetSystemImageTimer;
         private Dictionary<string, Screen> ScreenList;
         public fro_AdvancedOCRImage_PlanA()
         {
@@ -20,7 +22,7 @@ namespace DMDemo
 
         private void fro_AdvancedOCRImage_PlanA_Load(object sender, EventArgs e)
         {
-            GetSystemImageTimer = new Timer();
+            GetSystemImageTimer = new System.Windows.Forms.Timer();
             GetSystemImageTimer.Interval = 1000;
             GetSystemImageTimer.Tick += GetSystemImageTimer_Tick;
 
@@ -39,8 +41,28 @@ namespace DMDemo
 
             if (this.cbSrceen.Items.Count > 0)
             {
-                this.cbSrceen.SelectedIndex = 0;
-                this.btnGetSystemImage.Enabled = true;
+                if (this.ckbcurrenFromScrenn.Checked)
+                {
+                    SetCurrenScreen();
+                }
+                else
+                {
+                    this.cbSrceen.SelectedIndex = 0;
+                }
+
+                GetSystemImageTimer.Start();
+            }
+        }
+
+        private void SetCurrenScreen()
+        {
+            Screen ss = Screen.FromPoint(this.Location);
+            foreach (string key in ScreenList.Keys)
+            {
+                if (ScreenList[key].Equals(ss))
+                {
+                    this.cbSrceen.Text = key;
+                }
             }
         }
 
@@ -49,8 +71,11 @@ namespace DMDemo
             Image img = Clipboard.GetImage();
             if (img != null)
             {
+                if (this.ckbcurrenFromScrenn.Checked)
+                {
+                    SetCurrenScreen();//判断一下在那个屏幕
+                }
                 Screen scr= ScreenList[this.cbSrceen.Text];
-
                 Bitmap bmp = new Bitmap(scr.Bounds.Width, scr.Bounds.Height);
                 bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
 
@@ -61,21 +86,74 @@ namespace DMDemo
             }
         }
 
-        private void btnGetSystemImage_Click(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.btnGetSystemImage.Text == "开始监听粘贴板图像")
-            {
-                this.btnGetSystemImage.Text = "停止监听粘贴板图像";
-                GetSystemImageTimer.Start();
-                this.cbSrceen.Enabled = false;
-            }
-            else
-            {
-                this.btnGetSystemImage.Text = "开始监听粘贴板图像";
-                GetSystemImageTimer.Stop();
-                this.cbSrceen.Enabled = true;
+            this.panel2.Enabled = !this.ckbcurrenFromScrenn.Checked;
 
+            Screen ss = Screen.FromPoint(this.Location);
+            foreach (string key in ScreenList.Keys)
+            {
+                if (ScreenList[key].Equals(ss))
+                {
+                    this.cbSrceen.Text = key;
+                }
             }
+        }
+
+        private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Fro_LookImage fli = new Fro_LookImage(this.pictureBox1.Image);
+            fli.Show();
         }        
+
+        [DllImport("user32.dll")]
+        static extern void keybd_event
+        (
+            byte bVk,// 虚拟键值  
+            byte bScan,// 硬件扫描码  
+            uint dwFlags,// 动作标识  
+            IntPtr dwExtraInfo// 与键盘动作关联的辅加信息  
+        );
+
+        /// <summary>
+        /// 模拟Print Screen键盘消息，截取全屏图片。
+        /// </summary>
+        public void PrintScreen()
+        {
+            keybd_event((byte)0x2c, 0, 0x0, IntPtr.Zero);//down
+            Application.DoEvents(); 
+            keybd_event((byte)0x2c, 0, 0x2, IntPtr.Zero);//up
+            Application.DoEvents(); 
+        }
+ 
+        /// <summary>
+        /// 模拟Alt Print Screen键盘消息，截取当前窗口图片。
+        /// </summary>
+        public void AltPrintScreen()
+        {
+            keybd_event((byte)Keys.Menu, 0, 0x0, IntPtr.Zero);
+            keybd_event((byte)0x2c, 0, 0x0, IntPtr.Zero);//down
+            Application.DoEvents();
+            Application.DoEvents();
+            keybd_event((byte)0x2c, 0, 0x2, IntPtr.Zero);//up
+            keybd_event((byte)Keys.Menu, 0, 0x2, IntPtr.Zero);
+            Application.DoEvents();
+            Application.DoEvents();
+        }
+
+        private void btnPintScrenn_Click(object sender, EventArgs e)
+        {
+            if (this.ckbPintScreenIsHide.Checked)
+            {
+                this.Hide();
+            }
+            Thread.Sleep(500);
+            PrintScreen();
+            if (this.ckbPintScreenIsHide.Checked)
+            {
+                this.Show();
+                this.Activate();
+            }
+        } 
     }
 }

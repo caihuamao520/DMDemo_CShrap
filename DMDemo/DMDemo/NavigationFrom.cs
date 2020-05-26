@@ -36,5 +36,12 @@ namespace DMDemo
             ocrI.ShowDialog();
             Environment.Exit(0);
         }
+
+        private void btnOCR_PlanA_Click(object sender, EventArgs e)
+        {
+            fro_AdvancedOCRImage_PlanA planA = new fro_AdvancedOCRImage_PlanA();
+            planA.ShowDialog();
+            Environment.Exit(0);
+        }
     }
 }
