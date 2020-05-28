@@ -60,6 +60,7 @@
       <DependentUpon>ShowImage.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimulationKey.cs" />
     <Compile Include="ToolBarsFrom.cs">
       <SubType>Form</SubType>
     </Compile>

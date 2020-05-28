@@ -33,7 +33,7 @@
             // ShowImage
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(769, 553);
+            this.ClientSize = new System.Drawing.Size(100, 100);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
@@ -43,6 +43,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "选择图像";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ShowImage_FormClosing);
             this.Load += new System.EventHandler(this.ShowImage_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowImage_MouseDown);
