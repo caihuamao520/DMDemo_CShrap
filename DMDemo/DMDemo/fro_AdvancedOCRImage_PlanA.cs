@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using CropImage;
 
 namespace DMDemo
 {
@@ -50,8 +51,10 @@ namespace DMDemo
                     this.cbSrceen.SelectedIndex = 0;
                 }
 
-                GetSystemImageTimer.Start();
+                //GetSystemImageTimer.Start();
             }
+
+            this.panel2.Enabled = !this.ckbcurrenFromScrenn.Checked;
         }
 
         private void SetCurrenScreen()
@@ -81,8 +84,23 @@ namespace DMDemo
 
                 Graphics gh = Graphics.FromImage(bmp);
                 gh.DrawImage(img, 0, 0, scr.Bounds, GraphicsUnit.Pixel);
-                this.pictureBox1.Image = bmp;
+                //this.pictureBox1.Image = bmp;
                 Clipboard.Clear();
+
+                //抠图
+                if (bmp != null)
+                {
+                    this.Invoke(new Action(() => {
+                        ShowImage si = new ShowImage();
+                        si.Location = Screen.FromPoint(this.Location).Bounds.Location;
+                        si.ShowDialog();
+                        if (si.ChoiceImage != null)
+                        {
+                            this.pictureBox1.Image = si.ChoiceImage;
+                        }
+                    }));
+                   
+                }
             }
         }
 
@@ -148,12 +166,26 @@ namespace DMDemo
                 this.Hide();
             }
             Thread.Sleep(500);
-            PrintScreen();
+            //PrintScreen();
+
+            ShowImage si = new ShowImage();
+            si.Location = Screen.FromPoint(this.Location).Bounds.Location;
+            si.ShowDialog();
+            if (si.ChoiceImage != null)
+            {
+                this.pictureBox1.Image = si.ChoiceImage;
+            }
+
             if (this.ckbPintScreenIsHide.Checked)
             {
                 this.Show();
                 this.Activate();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
         } 
     }
 }

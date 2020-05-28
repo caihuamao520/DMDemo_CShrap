@@ -212,6 +212,12 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CropImage\CropImage.csproj">
+      <Project>{2dd40520-96b7-475d-b8db-69b7a7b58389}</Project>
+      <Name>CropImage</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

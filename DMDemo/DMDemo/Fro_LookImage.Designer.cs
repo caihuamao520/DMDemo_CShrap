@@ -34,11 +34,12 @@
             // 
             // pbMain
             // 
-            this.pbMain.BackColor = System.Drawing.Color.White;
+            this.pbMain.BackColor = System.Drawing.Color.CornflowerBlue;
             this.pbMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMain.Location = new System.Drawing.Point(0, 0);
             this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(284, 261);
+            this.pbMain.Size = new System.Drawing.Size(645, 487);
+            this.pbMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
             this.pbMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pbMain_MouseDoubleClick);
@@ -46,14 +47,11 @@
             // Fro_LookImage
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(645, 487);
             this.Controls.Add(this.pbMain);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Fro_LookImage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Fro_LookImage";
+            this.Text = "图像预览";
             this.Load += new System.EventHandler(this.Fro_LookImage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.ResumeLayout(false);

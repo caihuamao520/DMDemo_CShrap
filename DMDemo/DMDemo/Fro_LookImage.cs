@@ -17,7 +17,7 @@ namespace DMDemo
         {
             _img = img;
             InitializeComponent();
-            this.Size = _img.Size;
+            //this.Size = _img.Size;
             this.pbMain.Image = _img;
         }
 
