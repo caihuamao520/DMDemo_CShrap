@@ -19,13 +19,21 @@ namespace DMDemo
     public partial class OCRImage : Form
     {
         private string _tesseractDataFile = string.Empty;
+        private List<string> supportOpenFileExtensions;
         public OCRImage()
         {
             InitializeComponent();
+            supportOpenFileExtensions = new List<string>();
+            supportOpenFileExtensions.Add(".jpg");
+            supportOpenFileExtensions.Add(".bmp");
+            supportOpenFileExtensions.Add(".tif");
+            supportOpenFileExtensions.Add(".png");
+            supportOpenFileExtensions.Add(".gif");
         }
 
         private void OCRImage_Load(object sender, EventArgs e)
         {
+            this.pictureBox1.AllowDrop = true;
             this.cbEngineMode.Text = "Default";
             this.cbImageContenMode.Text = "SingleLine";
             this.cbEngineVersion.Text = "2.4.0（兼容win xp）";
@@ -227,7 +235,7 @@ namespace DMDemo
             int BackgroundReplaceTolerance = EditImageSet.GetEditImageSet().BackgroundReplaceTolerance;
             bool IsGrayByPixels = EditImageSet.GetEditImageSet().IsGrayByPixels;//开启灰度处理
             bool IsThresholding=EditImageSet.GetEditImageSet().IsThresholding;
-            bool IsClearNoise = false;//关闭降噪
+            bool IsClearNoise = EditImageSet.GetEditImageSet().IsClearNoise;//降噪
             int GrayBackgroundLimit = EditImageSet.GetEditImageSet().GrayBackgroundLimit;
             int NoiseMaxNearPoints = EditImageSet.GetEditImageSet().NoiseMaxNearPoints;
             bool IsAutoImageSize = EditImageSet.GetEditImageSet().IsAutoImageSize;//自动裁剪图像
@@ -323,7 +331,38 @@ namespace DMDemo
                 MessageBox.Show(ee.Message, "异常");
             }
         }
+        #region 图像拖放
+        private void pictureBox1_DragDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                
 
+                string fileName = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                string strFileExtension = Path.GetExtension(fileName);
+                if (supportOpenFileExtensions.Contains(strFileExtension))
+                {
+                    showImage(Image.FromFile(fileName));
+                }
+                else
+                {
+                    MessageBox.Show("不支持的文件类型，无法打开文件。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "异常", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void pictureBox1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) 
+                e.Effect = DragDropEffects.Link;
+            else 
+                e.Effect = DragDropEffects.None;
+        }
+        #endregion
 
     }
 }

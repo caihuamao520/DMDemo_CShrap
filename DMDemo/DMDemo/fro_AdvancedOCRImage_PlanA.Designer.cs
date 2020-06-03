@@ -31,6 +31,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkStopCloseFrom = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ckbPintScreenIsHide = new System.Windows.Forms.CheckBox();
             this.btnPintScrenn = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
             this.btnGetAllWinFrom = new System.Windows.Forms.Button();
             this.btnHideAllForm = new System.Windows.Forms.Button();
             this.btnReceviFrom = new System.Windows.Forms.Button();
-            this.chkStopCloseFrom = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -89,6 +89,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(504, 91);
             this.panel1.TabIndex = 3;
+            // 
+            // chkStopCloseFrom
+            // 
+            this.chkStopCloseFrom.AutoSize = true;
+            this.chkStopCloseFrom.Location = new System.Drawing.Point(156, 20);
+            this.chkStopCloseFrom.Name = "chkStopCloseFrom";
+            this.chkStopCloseFrom.Size = new System.Drawing.Size(96, 16);
+            this.chkStopCloseFrom.TabIndex = 10;
+            this.chkStopCloseFrom.Text = "拦截关闭窗口";
+            this.chkStopCloseFrom.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -235,16 +245,6 @@
             this.btnReceviFrom.UseVisualStyleBackColor = true;
             this.btnReceviFrom.Click += new System.EventHandler(this.btnReceviFrom_Click);
             // 
-            // chkStopCloseFrom
-            // 
-            this.chkStopCloseFrom.AutoSize = true;
-            this.chkStopCloseFrom.Location = new System.Drawing.Point(156, 20);
-            this.chkStopCloseFrom.Name = "chkStopCloseFrom";
-            this.chkStopCloseFrom.Size = new System.Drawing.Size(96, 16);
-            this.chkStopCloseFrom.TabIndex = 10;
-            this.chkStopCloseFrom.Text = "拦截关闭窗口";
-            this.chkStopCloseFrom.UseVisualStyleBackColor = true;
-            // 
             // fro_AdvancedOCRImage_PlanA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -257,7 +257,7 @@
             this.MinimizeBox = false;
             this.Name = "fro_AdvancedOCRImage_PlanA";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "任务管理器";
+            this.Text = "截屏方案A";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fro_AdvancedOCRImage_PlanA_FormClosing);
             this.Load += new System.EventHandler(this.fro_AdvancedOCRImage_PlanA_Load);
             this.LocationChanged += new System.EventHandler(this.fro_AdvancedOCRImage_PlanA_LocationChanged);
