@@ -110,6 +110,7 @@
     <Compile Include="GetHwndInfor.Designer.cs">
       <DependentUpon>GetHwndInfor.cs</DependentUpon>
     </Compile>
+    <Compile Include="HootKey.cs" />
     <Compile Include="HwndGetTitleFrom.cs">
       <SubType>Form</SubType>
     </Compile>

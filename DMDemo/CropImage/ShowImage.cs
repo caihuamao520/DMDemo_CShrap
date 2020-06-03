@@ -20,6 +20,10 @@ namespace CropImage
         /// 选取的图像
         /// </summary>
         public Image ChoiceImage {get;private set; }
+        /// <summary>
+        /// 截屏时是否隐藏所有窗体
+        /// </summary>
+        public bool IsHideFrom = true;
         public ShowImage()
         {
             InitializeComponent();
@@ -46,34 +50,14 @@ namespace CropImage
 
         private Image GetPrintScreen()
         {
-            Clipboard.Clear();
-            Image _tempImge = null;
             Bitmap bmpResult = null;
-            SimulationKey sk = new SimulationKey();
-            sk.PrintScreen();
-
-            for (int i = 0; i < 100; i++)//5秒钟后都拿不到图像说明出问题了
+            
+            Screen currenScr = Screen.FromPoint(this.Location);
+            bmpResult = new Bitmap(currenScr.Bounds.Width, currenScr.Bounds.Height);
+            using (Graphics gh = Graphics.FromImage(bmpResult))
             {
-                Thread.Sleep(100);
-                _tempImge = Clipboard.GetImage();
-                if (_tempImge != null)
-                {
-                    break;
-                }
+                gh.CopyFromScreen(currenScr.Bounds.Location, new System.Drawing.Point(0, 0), bmpResult.Size);
             }
-
-            //裁剪图像
-            if (_tempImge != null)
-            {
-                Screen currenScr = Screen.FromPoint(this.Location);
-                bmpResult = new Bitmap(currenScr.Bounds.Width, currenScr.Bounds.Height);
-                bmpResult.SetResolution(_tempImge.HorizontalResolution, _tempImge.VerticalResolution);
-                using (Graphics gh = Graphics.FromImage(bmpResult))
-                {
-                    gh.DrawImage(_tempImge, 0, 0, currenScr.Bounds, GraphicsUnit.Pixel);
-                }
-            }
-
             return bmpResult;
         }
 

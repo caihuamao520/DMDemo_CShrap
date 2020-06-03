@@ -53,6 +53,7 @@
     <Compile Include="choiceReach.Designer.cs">
       <DependentUpon>choiceReach.cs</DependentUpon>
     </Compile>
+    <Compile Include="ControlAllFrom.cs" />
     <Compile Include="ShowImage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +105,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\yes_ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Dm">
+      <Guid>{84288AAD-BA02-4EF2-85EC-3FAD4D11354D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 //using System.Threading;
 using System.Windows.Forms;
 
@@ -27,25 +28,68 @@ namespace CropImage
         /// </summary>
         public void PrintScreen()
         {
-            keybd_event((byte)0x2c, 0, 0x0, IntPtr.Zero);//down
-            Application.DoEvents();
-            keybd_event((byte)0x2c, 0, 0x2, IntPtr.Zero);//up
-            Application.DoEvents();
+            keybd_event((byte)Keys.PrintScreen, 0, 0x0, IntPtr.Zero);//down
+            //Application.DoEvents();
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.PrintScreen, 0, 0x2, IntPtr.Zero);//up
+            Thread.Sleep(50);
         }
 
         /// <summary>
         /// 模拟Alt + Print Screen键盘消息，截取当前窗口图片。
         /// </summary>
-        public void AltPrintScreen()
+        public void Alt_PrintScreen()
         {
-            keybd_event((byte)18, 0, 0x0, IntPtr.Zero);
-            keybd_event((byte)0x2c, 0, 0x0, IntPtr.Zero);//down
-            Application.DoEvents();
-            Application.DoEvents();
-            keybd_event((byte)0x2c, 0, 0x2, IntPtr.Zero);//up
-            keybd_event((byte)18, 0, 0x2, IntPtr.Zero);
-            Application.DoEvents();
-            Application.DoEvents();
+            keybd_event((byte)Keys.Menu, 0, 0x0, IntPtr.Zero);
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.PrintScreen, 0, 0x0, IntPtr.Zero);//down
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.PrintScreen, 0, 0x2, IntPtr.Zero);//up
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.Menu, 0, 0x2, IntPtr.Zero);
+            Thread.Sleep(50);
+        }
+        /// <summary>
+        /// 隐藏或显示所有窗口
+        /// </summary>
+        public void Win_D()
+        {
+            keybd_event((byte)Keys.LWin, 0, 0x0, IntPtr.Zero);
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.D, 0, 0x0, IntPtr.Zero);//down
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.D, 0, 0x2, IntPtr.Zero);//up
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.LWin, 0, 0x2, IntPtr.Zero);
+            Thread.Sleep(50);
+        }
+
+        public void Win_M()
+        {
+            keybd_event((byte)Keys.LWin, 0, 0x0, IntPtr.Zero);
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.M, 0, 0x0, IntPtr.Zero);//down
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.M, 0, 0x2, IntPtr.Zero);//up
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.LWin, 0, 0x2, IntPtr.Zero);
+            Thread.Sleep(50);
+        }
+
+        public void Win_Shift_M()
+        {
+            keybd_event((byte)Keys.LWin, 0, 0x0, IntPtr.Zero);
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.LShiftKey, 0, 0x0, IntPtr.Zero);
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.M, 0, 0x0, IntPtr.Zero);//down
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.M, 0, 0x2, IntPtr.Zero);//up
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.LShiftKey, 0, 0x2, IntPtr.Zero);
+            Thread.Sleep(50);
+            keybd_event((byte)Keys.LWin, 0, 0x2, IntPtr.Zero);
+            Thread.Sleep(50);
         }
     }
 }
