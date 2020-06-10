@@ -20,11 +20,32 @@ namespace DMDemo
         private bool _isGrayByPixels = true;//开启灰度处理
         private bool _isThresholding = true;//二值化
         private bool _autoImageSize = true;//自动图像大小
+        private bool _isHoughLine = false;//霍夫去除直线
+        private int _houghLineHeight = 2;//叠加阀值
         private int _autoImageHeight = 72;
         private bool _isClearNoise = false;//关闭降噪
         private int _grayBackgroundLimit = 128;
         private int _noiseMaxNearPoints = 1;
-
+        /// <summary>
+        /// 霍夫检测直线通过阈值
+        /// </summary>
+        public int HouhtLineHeight
+        {
+            get
+            {
+                return _houghLineHeight;
+            }
+        }
+        /// <summary>
+        /// 是否开启霍夫直线检测
+        /// </summary>
+        public bool IsHouhtLine
+        {
+            get
+            {
+                return _isHoughLine;
+            }
+        }
         /// <summary>
         /// 噪点的最大像素点
         /// </summary>
@@ -186,6 +207,10 @@ namespace DMDemo
             this.ckbTZTXDX.Checked = _autoImageSize;
             this.txtTXGD.Text = _autoImageHeight.ToString();
 
+            this.ckbHoughLine.Checked = _isHoughLine;
+            this.panel1.Enabled = _isHoughLine;
+            this.txtHoughLine_Cross.Text = _houghLineHeight.ToString();
+
             this.ckbJZ.Checked = _isClearNoise;
             this.txtJDJJ.Text = _grayBackgroundLimit.ToString();
             this.txtJDDX.Text = _noiseMaxNearPoints.ToString();
@@ -230,7 +255,6 @@ namespace DMDemo
         private void btnOK_Click(object sender, EventArgs e)
         {
             _isContrastRatio = this.ckbDUB.Checked;
-
             int temp = 0;
 
             if (int.TryParse(this.txtFZ.Text, out temp))
@@ -256,6 +280,18 @@ namespace DMDemo
             else
             {
                 MessageBox.Show("错误的 高度阀值", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _isHoughLine = this.ckbHoughLine.Checked;
+            temp = 2;
+            if (int.TryParse(this.txtHoughLine_Cross.Text, out temp))
+            {
+                _houghLineHeight = temp;
+            }
+            else
+            {
+                MessageBox.Show("错误的 霍夫通过阀值", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -300,6 +336,11 @@ namespace DMDemo
                 }
             }
             this.pbBackGroupColor.Image = bit;
+        }
+
+        private void ckbHoughLine_CheckedChanged(object sender, EventArgs e)
+        {
+            this.panel1.Enabled = this.ckbHoughLine.Checked;
         }
 
         

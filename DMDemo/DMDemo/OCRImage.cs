@@ -126,18 +126,38 @@ namespace DMDemo
             ofd.Title = "打开一张图片";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                string strFilePath = ofd.FileName;
-                if (File.Exists(strFilePath))
+                OpenImageFilePath = ofd.FileName;
+                if (File.Exists(OpenImageFilePath))
                 {
-                    showImage(Image.FromFile(strFilePath));
+                    showImage(Image.FromFile(OpenImageFilePath));
+
+                    this.linkAgenLoadImage.Enabled = true;
                 }
                 else
                 {
-                    MessageBox.Show(string.Format("'{0}'文件不存在！", Path.GetFileName(strFilePath)), "文件不存在", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("'{0}'文件不存在！", Path.GetFileName(OpenImageFilePath)), "文件不存在", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-
+        private string OpenImageFilePath = string.Empty;
+        private void linkAgenLoadImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                if (File.Exists(OpenImageFilePath))
+                {
+                    showImage(Image.FromFile(OpenImageFilePath));
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("'{0}'文件不存在！", Path.GetFileName(OpenImageFilePath)), "文件不存在", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            } 
+            catch (Exception ex)
+            {
+                 MessageBox.Show(ex.Message, "异常", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void btnScreenshot_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -154,6 +174,7 @@ namespace DMDemo
                     }
 
                     showImage(bmp);
+                    this.linkAgenLoadImage.Enabled = false;
                 }
             }
             catch (Exception ee)
@@ -170,6 +191,8 @@ namespace DMDemo
             linkEditImageSet.Enabled = true;
 
             this.pictureBox1.Image = img;
+
+            ShowImageInfro(img);
         }
 
         /// <summary>
@@ -240,6 +263,8 @@ namespace DMDemo
             int NoiseMaxNearPoints = EditImageSet.GetEditImageSet().NoiseMaxNearPoints;
             bool IsAutoImageSize = EditImageSet.GetEditImageSet().IsAutoImageSize;//自动裁剪图像
             int AutoImageHeight = EditImageSet.GetEditImageSet().AutoImageHeight;
+            bool IsStartHoughtLine = EditImageSet.GetEditImageSet().IsHouhtLine;
+            int HoughtHeight = EditImageSet.GetEditImageSet().HouhtLineHeight;
             try
             {
                 _ocrImage = new Bitmap(this.pictureBox1.Image);
@@ -257,6 +282,10 @@ namespace DMDemo
                     //取背景色
                     Color BackgroundColor = _ocrImage.GetPixel(1, 1);
                     _ocrImage = imgHandle.ReplaceColor(BackgroundColor, ReplaceBackgroundColor, BackgroundReplaceTolerance);
+                }
+                if (IsStartHoughtLine)
+                {
+                    _ocrImage = ImageCodeHandle.hough_line(_ocrImage, HoughtHeight);
                 }
                 if (IsGrayByPixels)
                 {
@@ -282,6 +311,7 @@ namespace DMDemo
                                 _ocrImage = imgHandle.Thresholding();//二值化
                             }
                         }
+                        
                     }
 
                     if (IsClearNoise)//黑白降噪
@@ -292,11 +322,19 @@ namespace DMDemo
                 }
 
                 this.pictureBox1.Image = _ocrImage;
+                //显示图像信息
+                ShowImageInfro(_ocrImage);
             }
             catch (Exception ex)
             {
                 MessageBox.Show( string.Format("图像处理异常，异常信息：{0}", ex.Message), "异常");
             }
+        }
+
+        private void ShowImageInfro(Image img)
+        {
+            this.txtOCRContent.Clear();
+            this.txtOCRContent.AppendText(string.Format("图像尺寸：{0}", img.Size));
         }
 
         private void linkEditImageSet_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -331,18 +369,18 @@ namespace DMDemo
                 MessageBox.Show(ee.Message, "异常");
             }
         }
+
         #region 图像拖放
         private void pictureBox1_DragDrop(object sender, DragEventArgs e)
         {
             try
             {
-                
-
-                string fileName = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
-                string strFileExtension = Path.GetExtension(fileName);
+                OpenImageFilePath = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                string strFileExtension = Path.GetExtension(OpenImageFilePath);
                 if (supportOpenFileExtensions.Contains(strFileExtension))
                 {
-                    showImage(Image.FromFile(fileName));
+                    showImage(Image.FromFile(OpenImageFilePath));
+                    this.linkAgenLoadImage.Enabled = true;
                 }
                 else
                 {
@@ -363,6 +401,8 @@ namespace DMDemo
                 e.Effect = DragDropEffects.None;
         }
         #endregion
+
+        
 
     }
 }

@@ -76,6 +76,7 @@
             this.Name = "NavigationFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "全部DEMO";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NavigationFrom_FormClosing);
             this.Load += new System.EventHandler(this.NavigationFrom_Load);
             this.ResumeLayout(false);
 

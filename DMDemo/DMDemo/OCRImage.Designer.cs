@@ -45,6 +45,7 @@
             this.rbAutoImageSize = new System.Windows.Forms.RadioButton();
             this.rbSouceImageSize = new System.Windows.Forms.RadioButton();
             this.linAsSaveImageFile = new System.Windows.Forms.LinkLabel();
+            this.linkAgenLoadImage = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -273,11 +274,25 @@
             this.linAsSaveImageFile.Text = "图像另存为";
             this.linAsSaveImageFile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linAsSaveImageFile_LinkClicked);
             // 
+            // linkAgenLoadImage
+            // 
+            this.linkAgenLoadImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkAgenLoadImage.AutoSize = true;
+            this.linkAgenLoadImage.Enabled = false;
+            this.linkAgenLoadImage.Location = new System.Drawing.Point(414, 523);
+            this.linkAgenLoadImage.Name = "linkAgenLoadImage";
+            this.linkAgenLoadImage.Size = new System.Drawing.Size(77, 12);
+            this.linkAgenLoadImage.TabIndex = 6;
+            this.linkAgenLoadImage.TabStop = true;
+            this.linkAgenLoadImage.Text = "重新载入图像";
+            this.linkAgenLoadImage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAgenLoadImage_LinkClicked);
+            // 
             // OCRImage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(901, 551);
+            this.Controls.Add(this.linkAgenLoadImage);
             this.Controls.Add(this.linAsSaveImageFile);
             this.Controls.Add(this.rbSouceImageSize);
             this.Controls.Add(this.rbAutoImageSize);
@@ -314,6 +329,7 @@
         private System.Windows.Forms.LinkLabel linAsSaveImageFile;
         private System.Windows.Forms.ComboBox cbEngineVersion;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.LinkLabel linkAgenLoadImage;
 
     }
 }

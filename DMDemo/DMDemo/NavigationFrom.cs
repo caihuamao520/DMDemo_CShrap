@@ -23,24 +23,52 @@ namespace DMDemo
 
         private void btnOpenHwndGetTitleDemo_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            HwndGetTitleFrom hgtf = new HwndGetTitleFrom();
-            hgtf.ShowDialog();
-            Environment.Exit(0);
+            try
+            {
+                this.WindowState = FormWindowState.Minimized;
+                HwndGetTitleFrom hgtf = new HwndGetTitleFrom();
+                hgtf.ShowDialog();
+                this.WindowState = FormWindowState.Normal;
+
+                //Environment.Exit(0);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void btnOpenTesseractOcrDemo_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            OCRImage ocrI = new OCRImage();
-            ocrI.ShowDialog();
-            Environment.Exit(0);
+            try
+            {
+                this.WindowState = FormWindowState.Minimized;
+                OCRImage ocrI = new OCRImage();
+                ocrI.ShowDialog();
+                this.WindowState = FormWindowState.Normal;
+                //Environment.Exit(0);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void btnOCR_PlanA_Click(object sender, EventArgs e)
         {
-            fro_AdvancedOCRImage_PlanA planA = new fro_AdvancedOCRImage_PlanA();
-            planA.ShowDialog();
+            try
+            {
+                this.WindowState = FormWindowState.Minimized;
+                fro_AdvancedOCRImage_PlanA planA = new fro_AdvancedOCRImage_PlanA();
+                planA.ShowDialog();
+                this.WindowState = FormWindowState.Normal;
+                //Environment.Exit(0);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void NavigationFrom_FormClosing(object sender, FormClosingEventArgs e)
+        {
             Environment.Exit(0);
         }
     }

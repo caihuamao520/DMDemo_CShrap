@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,6 +46,7 @@
             this.btnGetAllWinFrom = new System.Windows.Forms.Button();
             this.btnHideAllForm = new System.Windows.Forms.Button();
             this.btnReceviFrom = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -245,6 +247,11 @@
             this.btnReceviFrom.UseVisualStyleBackColor = true;
             this.btnReceviFrom.Click += new System.EventHandler(this.btnReceviFrom_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // fro_AdvancedOCRImage_PlanA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -291,5 +298,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button getTopFrom;
         private System.Windows.Forms.CheckBox chkStopCloseFrom;
+        private System.Windows.Forms.Timer timer1;
     }
 }

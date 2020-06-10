@@ -52,6 +52,10 @@
             this.txtJDJJ = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.ckbEZH = new System.Windows.Forms.CheckBox();
+            this.ckbHoughLine = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.txtHoughLine_Cross = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.pDUB.SuspendLayout();
             this.pBJSTH.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBackGroupColor)).BeginInit();
@@ -59,6 +63,7 @@
             this.pEZH.SuspendLayout();
             this.pZDTZDX.SuspendLayout();
             this.pJZ.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ckbDUB
@@ -97,7 +102,7 @@
             // ckbJZ
             // 
             this.ckbJZ.AutoSize = true;
-            this.ckbJZ.Location = new System.Drawing.Point(15, 91);
+            this.ckbJZ.Location = new System.Drawing.Point(15, 135);
             this.ckbJZ.Name = "ckbJZ";
             this.ckbJZ.Size = new System.Drawing.Size(84, 16);
             this.ckbJZ.TabIndex = 3;
@@ -108,7 +113,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(393, 313);
+            this.btnOK.Location = new System.Drawing.Point(393, 319);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(88, 35);
             this.btnOK.TabIndex = 4;
@@ -118,8 +123,8 @@
             // 
             // pDUB
             // 
-            this.pDUB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pDUB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pDUB.Controls.Add(this.txtFZ);
             this.pDUB.Controls.Add(this.label1);
             this.pDUB.Location = new System.Drawing.Point(113, 23);
@@ -145,8 +150,8 @@
             // 
             // pBJSTH
             // 
-            this.pBJSTH.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pBJSTH.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pBJSTH.Controls.Add(this.linSelectColor);
             this.pBJSTH.Controls.Add(this.pbBackGroupColor);
             this.pBJSTH.Controls.Add(this.label4);
@@ -185,26 +190,28 @@
             // 
             // pHD
             // 
-            this.pHD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pHD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pHD.Controls.Add(this.pEZH);
             this.pHD.Controls.Add(this.pJZ);
             this.pHD.Controls.Add(this.ckbEZH);
             this.pHD.Controls.Add(this.ckbJZ);
             this.pHD.Location = new System.Drawing.Point(113, 107);
             this.pHD.Name = "pHD";
-            this.pHD.Size = new System.Drawing.Size(368, 182);
+            this.pHD.Size = new System.Drawing.Size(368, 208);
             this.pHD.TabIndex = 6;
             // 
             // pEZH
             // 
-            this.pEZH.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pEZH.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pEZH.Controls.Add(this.ckbHoughLine);
+            this.pEZH.Controls.Add(this.panel1);
             this.pEZH.Controls.Add(this.ckbTZTXDX);
             this.pEZH.Controls.Add(this.pZDTZDX);
             this.pEZH.Location = new System.Drawing.Point(11, 31);
             this.pEZH.Name = "pEZH";
-            this.pEZH.Size = new System.Drawing.Size(309, 45);
+            this.pEZH.Size = new System.Drawing.Size(309, 91);
             this.pEZH.TabIndex = 6;
             // 
             // ckbTZTXDX
@@ -220,8 +227,8 @@
             // 
             // pZDTZDX
             // 
-            this.pZDTZDX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pZDTZDX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pZDTZDX.Controls.Add(this.txtTXGD);
             this.pZDTZDX.Controls.Add(this.label5);
             this.pZDTZDX.Location = new System.Drawing.Point(130, 6);
@@ -247,13 +254,13 @@
             // 
             // pJZ
             // 
-            this.pJZ.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pJZ.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pJZ.Controls.Add(this.txtJDDX);
             this.pJZ.Controls.Add(this.label3);
             this.pJZ.Controls.Add(this.txtJDJJ);
             this.pJZ.Controls.Add(this.label2);
-            this.pJZ.Location = new System.Drawing.Point(15, 115);
+            this.pJZ.Location = new System.Drawing.Point(15, 159);
             this.pJZ.Name = "pJZ";
             this.pJZ.Size = new System.Drawing.Size(305, 35);
             this.pJZ.TabIndex = 7;
@@ -301,11 +308,49 @@
             this.ckbEZH.UseVisualStyleBackColor = true;
             this.ckbEZH.CheckedChanged += new System.EventHandler(this.ckbEZH_CheckedChanged);
             // 
+            // ckbHoughLine
+            // 
+            this.ckbHoughLine.AutoSize = true;
+            this.ckbHoughLine.Location = new System.Drawing.Point(4, 56);
+            this.ckbHoughLine.Name = "ckbHoughLine";
+            this.ckbHoughLine.Size = new System.Drawing.Size(72, 16);
+            this.ckbHoughLine.TabIndex = 9;
+            this.ckbHoughLine.Text = "去除直线";
+            this.ckbHoughLine.UseVisualStyleBackColor = true;
+            this.ckbHoughLine.CheckedChanged += new System.EventHandler(this.ckbHoughLine_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.txtHoughLine_Cross);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Location = new System.Drawing.Point(130, 46);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(155, 35);
+            this.panel1.TabIndex = 8;
+            // 
+            // txtHoughLine_Cross
+            // 
+            this.txtHoughLine_Cross.Location = new System.Drawing.Point(102, 7);
+            this.txtHoughLine_Cross.Name = "txtHoughLine_Cross";
+            this.txtHoughLine_Cross.Size = new System.Drawing.Size(42, 21);
+            this.txtHoughLine_Cross.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 10);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(89, 12);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "霍夫通过阀值：";
+            // 
             // EditImageSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 360);
+            this.ClientSize = new System.Drawing.Size(508, 366);
             this.Controls.Add(this.pHD);
             this.Controls.Add(this.pBJSTH);
             this.Controls.Add(this.pDUB);
@@ -334,6 +379,8 @@
             this.pZDTZDX.PerformLayout();
             this.pJZ.ResumeLayout(false);
             this.pJZ.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -365,5 +412,9 @@
         private System.Windows.Forms.TextBox txtTXGD;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel pEZH;
+        private System.Windows.Forms.CheckBox ckbHoughLine;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox txtHoughLine_Cross;
+        private System.Windows.Forms.Label label6;
     }
 }

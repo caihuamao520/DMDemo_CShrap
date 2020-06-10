@@ -411,6 +411,11 @@ namespace DMDemo
             //    MessageBox.Show(string.Format("我的位置发生了变化，位置为：{0}", this.Location), "提示");
             //}
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            this.Show();
+        }
     }
     public static class ProcessMgr
     {
