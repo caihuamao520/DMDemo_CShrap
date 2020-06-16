@@ -16,7 +16,7 @@ namespace DMDemo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new NavigationFrom());
-            //Application.Run(new fro_AdvancedOCRImage_PlanA());
+            //Application.Run(new fro_HwndAndOCR_PlanA());
         }
     }
 }

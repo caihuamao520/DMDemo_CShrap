@@ -1,4 +1,4 @@
-﻿namespace DMDemo
+﻿namespace DMDemo.FromHwnd
 {
     partial class GetHwndInfor
     {

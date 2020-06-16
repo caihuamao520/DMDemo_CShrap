@@ -31,6 +31,7 @@
             this.btnOpenHwndGetTitleDemo = new System.Windows.Forms.Button();
             this.btnOpenTesseractOcrDemo = new System.Windows.Forms.Button();
             this.btnOCR_PlanA = new System.Windows.Forms.Button();
+            this.btnHandAndOCR_PlanA = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnOpenHwndGetTitleDemo
@@ -63,11 +64,22 @@
             this.btnOCR_PlanA.UseVisualStyleBackColor = true;
             this.btnOCR_PlanA.Click += new System.EventHandler(this.btnOCR_PlanA_Click);
             // 
+            // btnHandAndOCR_PlanA
+            // 
+            this.btnHandAndOCR_PlanA.Location = new System.Drawing.Point(41, 196);
+            this.btnHandAndOCR_PlanA.Name = "btnHandAndOCR_PlanA";
+            this.btnHandAndOCR_PlanA.Size = new System.Drawing.Size(276, 49);
+            this.btnHandAndOCR_PlanA.TabIndex = 3;
+            this.btnHandAndOCR_PlanA.Text = "窗体识别 + 图像识别 + 辅助";
+            this.btnHandAndOCR_PlanA.UseVisualStyleBackColor = true;
+            this.btnHandAndOCR_PlanA.Click += new System.EventHandler(this.btnHandAndOCR_PlanA_Click);
+            // 
             // NavigationFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(358, 214);
+            this.ClientSize = new System.Drawing.Size(358, 277);
+            this.Controls.Add(this.btnHandAndOCR_PlanA);
             this.Controls.Add(this.btnOCR_PlanA);
             this.Controls.Add(this.btnOpenTesseractOcrDemo);
             this.Controls.Add(this.btnOpenHwndGetTitleDemo);
@@ -87,5 +99,6 @@
         private System.Windows.Forms.Button btnOpenHwndGetTitleDemo;
         private System.Windows.Forms.Button btnOpenTesseractOcrDemo;
         private System.Windows.Forms.Button btnOCR_PlanA;
+        private System.Windows.Forms.Button btnHandAndOCR_PlanA;
     }
 }

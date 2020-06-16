@@ -10,6 +10,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using DMDemo.FromHwnd;
 
 namespace DMDemo
 {
@@ -44,14 +45,13 @@ namespace DMDemo
                 GetHwndInfor getHwnd = new GetHwndInfor();
                 if (getHwnd.ShowDialog() == DialogResult.Yes)
                 {
-                    iActiveHwnd = getHwnd.intHwnd;
+                    iActiveHwnd = getHwnd.HwndInfor.CurrentHwnd;
                     this.txtHwnd.Text = iActiveHwnd.ToString();
                     this.txtTitle.Text = string.Format("文本：{0}\r\n类名：{1}\r\n进程路径：{2}\r\n顶层窗体句柄：{3}\r\n鼠标位置：{4}\r\n组件距离顶层窗体的偏移量：{5}\r\n顶层窗体类名：{6}\r\n顶层窗体文本：{7}\r\n父窗体文本：{8}\r\n父窗体类名：{9}",
-                         getHwnd.HwndTitle, getHwnd.HwndClassName, getHwnd.HwndProcessPath, getHwnd.HwndTopFrom, getHwnd.MousePoint, 
-                         //getHwnd.CalculationTopFormOffsetPoint(GetHwndInfor.GetTopFormHwnd(iActiveHwnd), getHwnd.MousePoint),
+                         getHwnd.HwndInfor.CurrentHwndTitle, getHwnd.HwndInfor.CurrentHwndClassName, getHwnd.HwndInfor.HwndProcessPath, getHwnd.HwndInfor.TopFromHwnd, getHwnd.HwndInfor.MousePoint, 
                          getHwnd.CalculationTopFormOffsetPoint(iActiveHwnd),
-                         getHwnd.TopFromClassName, getHwnd.TopFromTitle,
-                         getHwnd.ParentTitle,getHwnd.ParentClassName);
+                         getHwnd.HwndInfor.TopFromClassName, getHwnd.HwndInfor.TopFromTitle,
+                         getHwnd.HwndInfor.ParentTitle, getHwnd.HwndInfor.ParentClassName);
 
                     //getHwnd.TopFromTitle
 

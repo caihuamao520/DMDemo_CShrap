@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO;
 
-namespace DMDemo
+namespace DMDemo.FromHwnd
 {
     public partial class GetHwndInfor : Form
     {
@@ -20,140 +20,25 @@ namespace DMDemo
         public static extern short GetKeyState(int nVirtKey);
         public const int VK_LBUTTON = 1;
         public const int VK_RBUTTON = 2;
-
         private Thread GetMousePintTh;
         private static dmsoft mydm = new dmsoft();//大漠插件
-        private Rectangle _rc;//句柄控件的位置、大小
-        private string _hwndTitle = string.Empty;//句柄内容
-        private string _hwndClassName = string.Empty;//句柄类名
-        private string _HwbdProcessPath = string.Empty;//句柄线程名称
-        private Point _mousePoint;
-        private int _hwnd;
-        private int _hwndTopFrom;
-        private string _topFromTitle = string.Empty;
-        private string _topFromClassName = string.Empty;
-
-        private string _parentTitle = string.Empty;//父窗体文本
-        private string _parentClassName = string.Empty;//父窗体类名
+        private MousePointHwndInfor _hwndInfor;
         /// <summary>
-        /// 句柄
+        /// 句柄信息
         /// </summary>
-        public int intHwnd 
+        public MousePointHwndInfor HwndInfor
         {
             get
             {
-                return _hwnd;
-            }
-        }
-        /// <summary>
-        /// 顶层窗体句柄
-        /// </summary>
-        public int HwndTopFrom
-        {
-            get
-            {
-                return _hwndTopFrom;
-            }
-        }
-        /// <summary>
-        /// 顶层窗体句柄内容
-        /// </summary>
-        public string TopFromTitle
-        {
-            get
-            {
-                return _topFromTitle;
-            }
-        }
-        /// <summary>
-        /// 顶层窗体类名
-        /// </summary>
-        public string TopFromClassName
-        {
-            get
-            {
-                return _topFromClassName;
-            }
-        }
-        /// <summary>
-        /// 句柄尺寸大小
-        /// </summary>
-        public Rectangle HwndRect 
-        {
-            get
-            {
-                return _rc;
-            }
-        }
-        /// <summary>
-        /// 句柄内容
-        /// </summary>
-        public string HwndTitle 
-        {
-            get 
-            {
-                return _hwndTitle;
-            }
-        }
-        
-        /// <summary>
-        /// 句柄类名
-        /// </summary>
-        public string HwndClassName
-        {
-            get
-            {
-                return _hwndClassName;
-            }
-        }
-        /// <summary>
-        /// 句柄类名
-        /// </summary>
-        public string HwndProcessPath
-        {
-            get
-            {
-                return _HwbdProcessPath;
+                return _hwndInfor;
             }
         }
 
         /// <summary>
-        /// 父窗体文本
+        /// 初始化
         /// </summary>
-        public string ParentTitle 
-        {
-            get
-            {
-                return _parentTitle;
-            }
-        }
-        /// <summary>
-        /// 父窗体类名
-        /// </summary>
-        public string ParentClassName 
-        {
-            get
-            {
-                return _parentClassName;
-            }
-        }
-
-        /// <summary>
-        /// 获取句柄时鼠标停留的位置
-        /// </summary>
-        public Point MousePoint 
-        {
-            get
-            {
-                return _mousePoint;
-            }
-        }
-
         public GetHwndInfor()
         {
-            _rc = new Rectangle();
-            _mousePoint = new Point(0);
-            _hwnd = 0;
             //判断组件是否注册
             if (!CheckRegistredOcx(@"CLSID\{26037A0E-7CBD-4FFF-9C63-56F2D0770214}"))
             {
@@ -173,55 +58,35 @@ namespace DMDemo
             this.TransparencyKey = this.panel1.BackColor;
         }
 
+        /// <summary>
+        /// 跟随当前鼠标位置获取句柄信息
+        /// </summary>
         private void GetMousePoint()
         {
+            _hwndInfor = new MousePointHwndInfor();
             while (true)
             {
                 if ((GetKeyState(VK_LBUTTON) & 0x80) == 0x80)
                 {
-                    _mousePoint = MousePosition;
-                    _hwnd = mydm.GetPointWindow(_mousePoint.X, _mousePoint.Y);//获取句柄
-                    _hwndTitle = mydm.GetWindowTitle(_hwnd);
-                    _hwndClassName = mydm.GetWindowClass(_hwnd);
+                    //当前句柄
+                    _hwndInfor.MousePoint = Control.MousePosition;
+                    _hwndInfor.CurrentHwnd = mydm.GetPointWindow(_hwndInfor.MousePoint.X, _hwndInfor.MousePoint.Y);//获取句柄
+                    _hwndInfor.CurrentHwndTitle = mydm.GetWindowTitle(_hwndInfor.CurrentHwnd);
+                    _hwndInfor.CurrentHwndClassName = mydm.GetWindowClass(_hwndInfor.CurrentHwnd);
+                    _hwndInfor.HwndProcessPath = mydm.GetWindowProcessPath(_hwndInfor.CurrentHwnd);
+
+                    //父窗体句柄
+                    _hwndInfor.ParentHwnd = mydm.GetWindow(_hwndInfor.CurrentHwnd, 0);
+                    _hwndInfor.ParentTitle = mydm.GetWindowTitle(_hwndInfor.ParentHwnd);
+                    _hwndInfor.ParentClassName = mydm.GetWindowClass(_hwndInfor.ParentHwnd);
+
+                    //顶层窗体句柄
+                    _hwndInfor.TopFromHwnd = mydm.GetWindow(_hwndInfor.CurrentHwnd, 7);
+                    _hwndInfor.TopFromTitle = mydm.GetWindowTitle(_hwndInfor.TopFromHwnd);
+                    _hwndInfor.TopFromClassName = mydm.GetWindowClass(_hwndInfor.TopFromHwnd);
                     
-                    int parenthwnd=mydm.GetWindow(_hwnd, 0);//获取父窗体句柄
-                    _parentTitle = mydm.GetWindowTitle(parenthwnd);
-                    _parentClassName = mydm.GetWindowClass(parenthwnd);
-
-                    _hwndTopFrom=mydm.GetWindow(_hwnd, 7);
-                    _topFromTitle = mydm.GetWindowTitle(_hwndTopFrom);
-                    _topFromClassName = mydm.GetWindowClass(_hwndTopFrom);
-                                        
-                    _HwbdProcessPath = mydm.GetWindowProcessPath(_hwnd);
-
-                    object x1, y1, x2, y2;
-
-                    Rectangle rc = new Rectangle(0, 0, 0, 0);
-                    if (mydm.GetClientRect(_hwnd, out x1, out y1, out x2, out y2) == 1)
-                    {
-                        int iTemp = -1;
-                        if (int.TryParse(x1.ToString(), out iTemp))
-                        {
-                            rc.X = iTemp;
-                        }
-                        iTemp = -1;
-                        if (int.TryParse(y1.ToString(), out iTemp))
-                        {
-                            rc.Y = iTemp;
-                        }
-                        iTemp = 0;
-                        if (int.TryParse(x2.ToString(), out iTemp))
-                        {
-                            rc.Width = (iTemp - rc.X);
-                        }
-                        iTemp = 0;
-                        if (int.TryParse(y2.ToString(), out iTemp))
-                        {
-                            rc.Height = (iTemp - rc.Y);
-                        }
-                    }
-                    _rc = rc;
-                    SetFormSize(rc);
+                    _hwndInfor.HwndRect = GetHwndRec(_hwndInfor.CurrentHwnd);
+                    SetFormSize(_hwndInfor.HwndRect);
                 }
                 else
                 {
@@ -234,6 +99,37 @@ namespace DMDemo
             {
                 this.DialogResult = DialogResult.Yes;
             }));
+        }
+
+        private static Rectangle GetHwndRec(int hwnd)
+        {
+            object x1, y1, x2, y2;
+            Rectangle rc = new Rectangle(0, 0, 0, 0);
+            if (mydm.GetClientRect(hwnd, out x1, out y1, out x2, out y2) == 1)
+            {
+                int iTemp = -1;
+                if (int.TryParse(x1.ToString(), out iTemp))
+                {
+                    rc.X = iTemp;
+                }
+                iTemp = -1;
+                if (int.TryParse(y1.ToString(), out iTemp))
+                {
+                    rc.Y = iTemp;
+                }
+                iTemp = 0;
+                if (int.TryParse(x2.ToString(), out iTemp))
+                {
+                    rc.Width = (iTemp - rc.X);
+                }
+                iTemp = 0;
+                if (int.TryParse(y2.ToString(), out iTemp))
+                {
+                    rc.Height = (iTemp - rc.Y);
+                }
+            }
+
+            return rc;
         }
 
         public void SetFormSize(Rectangle rc)
@@ -254,6 +150,27 @@ namespace DMDemo
         {
             return mydm.GetWindowTitle(hwend);
         }
+
+        /// <summary>
+        /// 获取父窗体句柄
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static int GetHwndParentHwnd(int hwnd)
+        {
+            return mydm.GetWindow(hwnd, 0);
+        }
+
+        /// <summary>
+        /// 获取类名称
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static string GetHwndClassName(int hwnd)
+        {
+            return mydm.GetWindowClass(hwnd);
+        }
+
         /// <summary>
         /// 根据鼠标位置获取句柄
         /// </summary>
@@ -274,22 +191,22 @@ namespace DMDemo
             return mydm.FindWindowEx(parent, className, strTitle);
         }
         /// <summary>
-        /// 获取父窗体句柄
+        /// 获取顶层窗口
         /// </summary>
         /// <param name="hwnd"></param>
         /// <returns></returns>
-        public static int GetHwndParentHwnd(int hwnd)
+        public static int GetTopFormHwnd(int hwnd)
         {
-            return mydm.GetWindow(hwnd, 0);
+            return mydm.GetWindow(hwnd, 7);
         }
         /// <summary>
-        /// 获取类名称
+        /// 获取窗口所在的进程的exe文件全路径
         /// </summary>
         /// <param name="hwnd"></param>
         /// <returns></returns>
-        public static string GetHwndClassName(int hwnd)
+        public static string GetWindowProcessPath(int hwnd)
         {
-            return mydm.GetWindowClass(hwnd);
+            return mydm.GetWindowProcessPath(hwnd);
         }
         /// <summary>
         /// 根据类名与题名查找窗体
@@ -310,6 +227,7 @@ namespace DMDemo
             }
             return FormHwndList;
         }
+
         /// <summary>
         /// 计算父窗体坐标距离目标组件的偏移量
         /// </summary>
@@ -360,6 +278,7 @@ namespace DMDemo
             }
             return ResultPoint;
         }
+
         /// <summary>
         /// 依据顶层窗体和偏移量获取子窗体
         /// </summary>
@@ -417,16 +336,7 @@ namespace DMDemo
                 return iResult;
             }
         }
-
-        /// <summary>
-        /// 获取顶层窗口
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <returns></returns>
-        public static int GetTopFormHwnd(int hwnd)
-        {
-            return mydm.GetWindow(hwnd, 7);
-        }
+                
         /// <summary>
         /// 置顶指定窗体
         /// </summary>
@@ -451,6 +361,7 @@ namespace DMDemo
                 return false;
             }
         }
+
         /// <summary>
         /// 取消置顶指定窗体
         /// </summary>
@@ -474,6 +385,7 @@ namespace DMDemo
                 return false;
             }
         }
+
         /// <summary>
         /// 查找顶层窗口
         /// </summary>
@@ -482,6 +394,33 @@ namespace DMDemo
         public static int FindTopForm(string className,string title)
         {
             return mydm.FindWindow(className, title);
+        }
+
+        /// <summary>
+        /// 获取给定窗口相关的窗口句柄
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        public static int GetWindow(int hwnd,GetWindowFlagEnum flag) 
+        {
+            int iflag = (int)flag;
+            return mydm.GetWindow(hwnd, iflag);
+        }
+        /// <summary>
+        /// 获取句柄图像
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static Bitmap GetHwndImage(int hwnd)
+        {
+            Rectangle rc = GetHwndRec(hwnd);
+            Bitmap bmp = new Bitmap(rc.Width, rc.Height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CopyFromScreen(rc.Location, new System.Drawing.Point(0, 0), rc.Size);
+            }
+            return bmp;
         }
 
         /// <summary>
@@ -536,5 +475,44 @@ namespace DMDemo
                 return false;
             }
         }
+
+    }
+    /// <summary>
+    /// 查找窗口句柄动作枚举
+    /// </summary>
+    public enum GetWindowFlagEnum
+    { 
+        /// <summary>
+        /// 获取父窗口
+        /// </summary>
+        GetParentHwnd,
+        /// <summary>
+        /// 获取子节点的第一个窗口
+        /// </summary>
+        GetChildFirstHwnd,
+        /// <summary>
+        /// 获取第一个窗口
+        /// </summary>
+        GetFirstHwnd,
+        /// <summary>
+        /// 获取最后一个窗口
+        /// </summary>
+        GetLastHwnd,
+        /// <summary>
+        /// 获取下一个窗口
+        /// </summary>
+        GetNextHwnd,
+        /// <summary>
+        /// 获取上一个窗口
+        /// </summary>
+        GetUpHwnd,
+        /// <summary>
+        /// 获取窗体的拥有者
+        /// </summary>
+        GetOwnHwnd,
+        /// <summary>
+        /// 获取顶层窗口
+        /// </summary>
+        GetTopHwnd
     }
 }

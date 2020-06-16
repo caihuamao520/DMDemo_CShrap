@@ -17,8 +17,8 @@ namespace DMDemo
     
     public partial class fro_AdvancedOCRImage_PlanA : Form
     {
-        private System.Windows.Forms.Timer GetSystemImageTimer;
-        private Dictionary<string, Screen> ScreenList;
+        //private System.Windows.Forms.Timer GetSystemImageTimer;
+        //private Dictionary<string, Screen> ScreenList;
         
         public fro_AdvancedOCRImage_PlanA()
         {

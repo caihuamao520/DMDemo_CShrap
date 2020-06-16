@@ -18,7 +18,7 @@ namespace DMDemo
 {
     public partial class OCRImage : Form
     {
-        private string _tesseractDataFile = string.Empty;
+        private static string _tesseractDataFile = Path.Combine(Application.StartupPath, "tessdata");
         private List<string> supportOpenFileExtensions;
         public OCRImage()
         {
@@ -29,15 +29,16 @@ namespace DMDemo
             supportOpenFileExtensions.Add(".tif");
             supportOpenFileExtensions.Add(".png");
             supportOpenFileExtensions.Add(".gif");
-        }
 
-        private void OCRImage_Load(object sender, EventArgs e)
-        {
             this.pictureBox1.AllowDrop = true;
             this.cbEngineMode.Text = "Default";
             this.cbImageContenMode.Text = "SingleLine";
             this.cbEngineVersion.Text = "2.4.0（兼容win xp）";
-            _tesseractDataFile = Path.Combine(Application.StartupPath, "tessdata");
+        }
+
+        private void OCRImage_Load(object sender, EventArgs e)
+        {
+            
         }
 
         [HandleProcessCorruptedStateExceptions]
@@ -45,7 +46,7 @@ namespace DMDemo
         {
             try
             {
-                Queue<string> str = new Queue<string>();
+                //Queue<string> str = new Queue<string>();
                 
                 if (File.Exists(Path.Combine(_tesseractDataFile, "eng.traineddata")))
                 {
@@ -97,6 +98,71 @@ namespace DMDemo
             {
                 MessageBox.Show(ee.Message, "异常");
             }
+        }
+
+        public static OCRResultInfor OCRBitmpa(Bitmap bit, string model = "3.3.0（新版）", string EngineMode = "Default", string ImageContenMode = "SingleLine")
+        {
+            OCRResultInfor Result = null;
+            try
+            {
+                if (File.Exists(Path.Combine(_tesseractDataFile, "eng.traineddata")))
+                {
+                    //PageSegMode.SingleLine
+                    string strFileDLL = string.Empty;
+
+                    if (model == "2.4.0（兼容win xp）")
+                    {
+                        strFileDLL = Path.Combine(Application.StartupPath, "Tesseract_2.4.dll");
+                    }
+                    else
+                    {
+                        strFileDLL = Path.Combine(Application.StartupPath, "Tesseract_3.3.dll");
+                    }
+                    if (!File.Exists(strFileDLL))
+                    {
+                        throw new Exception(string.Format("未找到 {0} 文件。", Path.GetFileName(strFileDLL)));
+                    }
+
+                    Assembly dllFromPlugin = Assembly.LoadFile(strFileDLL);
+                    Type typeTE = dllFromPlugin.GetType("Tesseract.TesseractEngine");
+                    Type typePC = dllFromPlugin.GetType("Tesseract.PixConverter");
+                    Type psmEnum = dllFromPlugin.GetType("Tesseract.PageSegMode");
+                    Type Pixs = dllFromPlugin.GetType("Tesseract.Pix");
+                    Type EngineModes = dllFromPlugin.GetType("Tesseract.EngineMode");
+
+                    object oEngineMode = Enum.Parse(EngineModes, EngineMode);
+                    object opsm = Enum.Parse(psmEnum, ImageContenMode);
+
+                    Object oTesseractEngine = Activator.CreateInstance(typeTE, new object[] { _tesseractDataFile, "eng", oEngineMode });
+
+                    MethodInfo miToPix = typePC.GetMethod("ToPix");
+                    MethodInfo miProcess = typeTE.GetMethod("Process", new Type[] { Pixs, psmEnum });
+
+                    Bitmap ocrImage = new Bitmap(bit);
+                    Object objImagPix = miToPix.Invoke(null, new object[] { ocrImage });
+                    dynamic page = miProcess.Invoke(oTesseractEngine, new object[] { objImagPix, opsm });
+
+                    Result = new OCRResultInfor()
+                    {
+                        OCRContent = page.GetText(),
+                        MeanConfidence = (int)(page.GetMeanConfidence() * 100)
+                    };
+                    //string strOCRText = page.GetText();
+                    //this.txtOCRContent.Text = string.Format("时间：\r\n{0}\r\n识别内容：\r\n{1}\r\n结果信任度：{2}%\r\n图像大小：{3}\r\n引擎版本：{4}",
+                    //    DateTime.Now.ToString(), strOCRText, (page.GetMeanConfidence() * 100),
+                    //    this.pictureBox1.Image.Size, this.cbEngineVersion.Text == "2.4.0（兼容win xp）" ? "2.4.0" : "3.3.0");
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("'{0}'数据文件不存在！", Path.GetFileName(_tesseractDataFile)), "文件不存在", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message, "异常");
+            }
+
+            return Result;
         }
 
         private void InitOCREngine()
@@ -251,13 +317,103 @@ namespace DMDemo
         private static Bitmap _ocrImage = null;/// 处理后的图像
         private void btnEditImage_Click(object sender, EventArgs e)
         {
+            //bool IsContrastRatio = EditImageSet.GetEditImageSet().IsContrastRatio;//开启对比度调整
+            //int ContrastRatioValue = EditImageSet.GetEditImageSet().ContrastRatioValue;
+            //bool IsBackgroundColorReplace = EditImageSet.GetEditImageSet().IsBackgroundColorReplace;//关闭背景色替换
+            //Color ReplaceBackgroundColor = EditImageSet.GetEditImageSet().ReplaceBackgroundColor;
+            //int BackgroundReplaceTolerance = EditImageSet.GetEditImageSet().BackgroundReplaceTolerance;
+            //bool IsGrayByPixels = EditImageSet.GetEditImageSet().IsGrayByPixels;//开启灰度处理
+            //bool IsThresholding=EditImageSet.GetEditImageSet().IsThresholding;
+            //bool IsClearNoise = EditImageSet.GetEditImageSet().IsClearNoise;//降噪
+            //int GrayBackgroundLimit = EditImageSet.GetEditImageSet().GrayBackgroundLimit;
+            //int NoiseMaxNearPoints = EditImageSet.GetEditImageSet().NoiseMaxNearPoints;
+            //bool IsAutoImageSize = EditImageSet.GetEditImageSet().IsAutoImageSize;//自动裁剪图像
+            //int AutoImageHeight = EditImageSet.GetEditImageSet().AutoImageHeight;
+            //bool IsStartHoughtLine = EditImageSet.GetEditImageSet().IsHouhtLine;
+            //int HoughtHeight = EditImageSet.GetEditImageSet().HouhtLineHeight;
+            //try
+            //{
+            //    _ocrImage = new Bitmap(this.pictureBox1.Image);
+
+            //    //图像处理
+            //    ImageCodeHandle imgHandle = new ImageCodeHandle(_ocrImage);
+            //    //调整对比度 截图过程中处理
+            //    if (IsContrastRatio)//是否进行对比度调整
+            //    {
+            //        _ocrImage = imgHandle.img_color_contrast(ContrastRatioValue);
+            //    }
+            //    //替换背景色
+            //    if (IsBackgroundColorReplace)
+            //    {
+            //        //取背景色
+            //        Color BackgroundColor = _ocrImage.GetPixel(1, 1);
+            //        _ocrImage = imgHandle.ReplaceColor(BackgroundColor, ReplaceBackgroundColor, BackgroundReplaceTolerance);
+            //    }
+            //    if (IsStartHoughtLine)
+            //    {
+            //        _ocrImage = ImageCodeHandle.hough_line(_ocrImage, HoughtHeight);
+            //    }
+            //    if (IsGrayByPixels)
+            //    {
+            //        //_ocrImage = imgHandle.GrayByPixels();//灰度
+            //        _ocrImage = imgHandle.ToGrey();//灰度
+            //        if (IsThresholding)
+            //        {
+            //            _ocrImage = imgHandle.Thresholding();//二值化
+
+            //            if (IsAutoImageSize)//自动裁剪图像
+            //            {
+            //                _ocrImage = ImageCodeHandle.TailorImage(_ocrImage);//裁剪图像大小
+            //                if (_ocrImage.Height < AutoImageHeight)
+            //                {
+            //                    float fTemp = ((float)AutoImageHeight) / ((float)_ocrImage.Height);//缩放因子
+
+            //                    int iw = (int)Math.Round(_ocrImage.Width * fTemp, 0);
+            //                    int ih = (int)Math.Round(_ocrImage.Height * fTemp, 0);
+
+            //                    _ocrImage = ImageCodeHandle.KiResizeImage(_ocrImage, iw, ih);//缩放
+
+            //                    imgHandle = new ImageCodeHandle(_ocrImage);
+            //                    _ocrImage = imgHandle.Thresholding();//二值化
+            //                }
+            //            }
+                        
+            //        }
+
+            //        if (IsClearNoise)//黑白降噪
+            //        {
+            //            _ocrImage = imgHandle.ClearNoise(GrayBackgroundLimit, NoiseMaxNearPoints);
+            //        }
+
+            //    }
+
+            //    this.pictureBox1.Image = _ocrImage;
+            //    //显示图像信息
+            //    ShowImageInfro(_ocrImage);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show( string.Format("图像处理异常，异常信息：{0}", ex.Message), "异常");
+            //}
+
+            this.pictureBox1.Image = ImageProcessing(this.pictureBox1.Image);
+            //显示图像信息
+            ShowImageInfro(this.pictureBox1.Image);
+        }
+        /// <summary>
+        /// 图像处理
+        /// </summary>
+        /// <param name="_bit"></param>
+        /// <returns></returns>
+        public static Bitmap ImageProcessing(Image _bit)
+        {
             bool IsContrastRatio = EditImageSet.GetEditImageSet().IsContrastRatio;//开启对比度调整
             int ContrastRatioValue = EditImageSet.GetEditImageSet().ContrastRatioValue;
             bool IsBackgroundColorReplace = EditImageSet.GetEditImageSet().IsBackgroundColorReplace;//关闭背景色替换
             Color ReplaceBackgroundColor = EditImageSet.GetEditImageSet().ReplaceBackgroundColor;
             int BackgroundReplaceTolerance = EditImageSet.GetEditImageSet().BackgroundReplaceTolerance;
             bool IsGrayByPixels = EditImageSet.GetEditImageSet().IsGrayByPixels;//开启灰度处理
-            bool IsThresholding=EditImageSet.GetEditImageSet().IsThresholding;
+            bool IsThresholding = EditImageSet.GetEditImageSet().IsThresholding;
             bool IsClearNoise = EditImageSet.GetEditImageSet().IsClearNoise;//降噪
             int GrayBackgroundLimit = EditImageSet.GetEditImageSet().GrayBackgroundLimit;
             int NoiseMaxNearPoints = EditImageSet.GetEditImageSet().NoiseMaxNearPoints;
@@ -267,7 +423,7 @@ namespace DMDemo
             int HoughtHeight = EditImageSet.GetEditImageSet().HouhtLineHeight;
             try
             {
-                _ocrImage = new Bitmap(this.pictureBox1.Image);
+                _ocrImage = new Bitmap(_bit);
 
                 //图像处理
                 ImageCodeHandle imgHandle = new ImageCodeHandle(_ocrImage);
@@ -311,7 +467,7 @@ namespace DMDemo
                                 _ocrImage = imgHandle.Thresholding();//二值化
                             }
                         }
-                        
+
                     }
 
                     if (IsClearNoise)//黑白降噪
@@ -321,13 +477,12 @@ namespace DMDemo
 
                 }
 
-                this.pictureBox1.Image = _ocrImage;
-                //显示图像信息
-                ShowImageInfro(_ocrImage);
+                return _ocrImage;
             }
             catch (Exception ex)
             {
-                MessageBox.Show( string.Format("图像处理异常，异常信息：{0}", ex.Message), "异常");
+                MessageBox.Show(string.Format("图像处理异常，异常信息：{0}", ex.Message), "异常");
+                return null;
             }
         }
 
@@ -404,5 +559,19 @@ namespace DMDemo
 
         
 
+    }
+    /// <summary>
+    /// 识别结果
+    /// </summary>
+    public class OCRResultInfor
+    {
+        /// <summary>
+        /// 识别内容
+        /// </summary>
+        public string OCRContent { get; set; }
+        /// <summary>
+        /// 识别内容信任度
+        /// </summary>
+        public int MeanConfidence { get; set; }
     }
 }

@@ -71,5 +71,21 @@ namespace DMDemo
         {
             Environment.Exit(0);
         }
+
+        private void btnHandAndOCR_PlanA_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.WindowState = FormWindowState.Minimized;
+                fro_HwndAndOCR_PlanA hoFrom = new fro_HwndAndOCR_PlanA();
+                hoFrom.ShowDialog();
+                this.WindowState = FormWindowState.Normal;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
     }
 }
